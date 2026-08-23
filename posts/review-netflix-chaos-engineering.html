@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width,initial-scale=1" name="viewport">
+  <title>
+   Designing for Failure: What Netflix's Simian Army Still Teaches About Reliability &mdash; Hassan Malik
+  </title>
+  <meta content="An independent review of Netflix's Simian Army and the reliability lessons behind controlled failure, recovery, observability, and blast radius." name="description">
+  <link href="../assets/favicon.svg" rel="icon" type="image/svg+xml">
+  <link href="../assets/styles.css" rel="stylesheet">
+  <link href="https://hassanmalik.github.io/hassanmalikblog/posts/review-netflix-chaos-engineering.html" rel="canonical">
+  <meta content="Designing for Failure: What Netflix's Simian Army Still Teaches About Reliability &mdash; Hassan Malik" property="og:title">
+  <meta content="An independent review of Netflix's Simian Army and the reliability lessons behind controlled failure, recovery, observability, and blast radius." property="og:description">
+  <meta content="article" property="og:type">
+  <meta content="https://hassanmalik.github.io/hassanmalikblog/posts/review-netflix-chaos-engineering.html" property="og:url">
+  <script type="application/ld+json">
+   {"@context":"https://schema.org","@type":"Article","headline":"Designing for Failure: What Netflix's Simian Army Still Teaches About Reliability","author":{"@type":"Person","name":"Hassan Malik"},"datePublished":"2026-08-23","isBasedOn":"https://netflixtechblog.com/the-netflix-simian-army-16e57fbab116","mainEntityOfPage":"https://hassanmalik.github.io/hassanmalikblog/posts/review-netflix-chaos-engineering.html"}
+  </script>
+ </head>
+ <body>
+  <a class="skip-link" href="#main-content">
+   Skip to content
+  </a>
+  <header class="site-header">
+   <nav aria-label="Primary navigation" class="nav container">
+    <a class="brand" href="../index.html">
+     <span class="brand-mark">
+      HM
+     </span>
+     <span>
+      Hassan Malik
+     </span>
+    </a>
+    <div class="nav-links">
+     <a href="../index.html">
+      Home
+     </a>
+     <a aria-current="page" class="active" href="../blog.html">
+      Writing
+     </a>
+     <a href="../lab.html">
+      Lab
+     </a>
+     <a href="../about.html">
+      About
+     </a>
+     <a class="nav-cta" href="../contact.html">
+      Contact
+     </a>
+    </div>
+    <button aria-expanded="false" aria-label="Toggle navigation" class="mobile-toggle">
+     Menu
+    </button>
+   </nav>
+  </header>
+  <main class="article-shell" id="main-content">
+   <div class="eyebrow">
+    Publication review &middot; Netflix TechBlog
+   </div>
+   <h1>
+    Designing for Failure: What Netflix's Simian Army Still Teaches About Reliability
+   </h1>
+   <p class="article-dek">
+    Failure injection creates value only when it tests a specific recovery claim inside a controlled blast radius.
+   </p>
+   <div class="article-meta">
+    <a class="article-author" href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">
+     Hassan Malik &nearrow;
+    </a>
+    &middot; 8 min read &middot; Published 2026-08-23
+   </div>
+   <div class="source-note">
+    <strong>
+     Source reviewed:
+    </strong>
+    Netflix TechBlog,
+    <a href="https://netflixtechblog.com/the-netflix-simian-army-16e57fbab116" rel="noopener noreferrer" target="_blank">
+     The Netflix Simian Army &nearrow;
+    </a>
+    . This is an independent review; it is not affiliated with Netflix.
+   </div>
+   <article class="prose" data-archetype="Harden" data-article-type="Publication Review" data-pillar="Reliability & Scale">
+    <div class="article-context">
+     Publication Review &middot; Reliability & Scale &times; Harden &middot;
+     <span class="topic-tag">
+      Chaos Engineering
+     </span>
+     &middot;
+     <span class="topic-tag">
+      Resilience
+     </span>
+     &middot;
+     <span class="topic-tag">
+      Failure Recovery
+     </span>
+    </div>
+    <h2>
+     The engineering problem
+    </h2>
+    <p>
+     Distributed systems fail in combinations that design documents rarely enumerate. Netflix's Simian Army made selected failures routine so teams could discover whether redundancy, failover, and recovery mechanisms worked before an uncontrolled incident supplied the test.
+    </p>
+    <h2>
+     The approach
+    </h2>
+    <p>
+     The memorable names can obscure the engineering discipline: inject a known class of failure, constrain when and where it occurs, observe user and system behavior, and improve automatic recovery. The system turns resilience from an architectural assertion into an operationally testable property.
+    </p>
+    <h2>
+     Tradeoffs
+    </h2>
+    <p>
+     Experiments consume operational attention and can cause real harm when blast radius, abort conditions, observability, or ownership are weak. The safest early experiment is rarely random destruction. It is a narrow hypothesis tested during staffed hours with clear steady-state signals.
+    </p>
+    <h2>
+     What generalizes
+    </h2>
+    <p>
+     Teams should identify their most important recovery assumptions and exercise them continuously: instance loss, dependency latency, stale data, queue backlog, credential failure, or regional isolation. Reliability improves when recovery is practiced rather than documented once.
+    </p>
+    <h2>
+     What is context-dependent
+    </h2>
+    <p>
+     Netflix's availability needs and cloud architecture justified a sophisticated program. Lower-scale or higher-regulation systems may need simulations, game days, or pre-production fault injection before production experiments.
+    </p>
+    <h2>
+     Architecture review questions
+    </h2>
+    <ul>
+     <li>
+      What failure are we claiming the system survives?
+     </li>
+     <li>
+      Which signal defines steady state from the user's perspective?
+     </li>
+     <li>
+      What limits the blast radius and stops the experiment?
+     </li>
+     <li>
+      Can the system recover without a particular expert online?
+     </li>
+    </ul>
+    <p class="review-scope">
+     The Simian Army description is based on Netflix's publication; the modern experiment framing is my synthesis.
+    </p>
+   </article>
+   <div class="article-next">
+    <span>
+     Related reading
+    </span>
+    <a href="distributed-systems-agentic-ai.html">
+     Distributed Systems for Agentic AI &nearrow;
+    </a>
+   </div>
+  </main>
+  <footer class="footer">
+   <div class="container footer-grid">
+    <div>
+     &copy;
+     <span data-year>
+     </span>
+     Hassan Malik
+    </div>
+    <div class="footer-links">
+     <a href="../blog.html">
+      All writing
+     </a>
+     <a href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">
+      LinkedIn &nearrow;
+     </a>
+    </div>
+   </div>
+  </footer>
+  <script src="../assets/main.js">
+  </script>
+ </body>
+</html>

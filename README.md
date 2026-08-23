@@ -72,6 +72,26 @@ When a domain is purchased:
 
 No package manager or build step is required.
 
+## Verification
+
+Install the development-only HTML parser with `python -m pip install -r requirements-dev.txt`, then run the complete publication check suite:
+
+```powershell
+python tools/check_site.py
+```
+
+## Publication taxonomy
+
+Every post has three required `<article>` attributes:
+
+- `data-pillar` — one of the six engineering domains shown on the Writing page.
+- `data-archetype` — Build, Scale, Migrate, Optimize, Harden, Design, or Strategize.
+- `data-article-type` — Original Essay or Publication Review.
+
+Article context displays the same `Pillar × Archetype` classification and focused `.topic-tag` labels. Publication reviews must link to a first-party source in `.source-note`, state that the review is independent, paraphrase source claims, and avoid implying first-hand operation of the reviewed system.
+
+When adding an article, add its card to `blog.html`, add its canonical URL to `sitemap.xml`, provide unique title/description/Open Graph metadata and valid JSON-LD, then run the full verification command.
+
 
 ## SEO/content update (2026-08-22)
 

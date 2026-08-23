@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width,initial-scale=1" name="viewport">
+  <title>
+   Reliable Integrations Start at the API Boundary: Reviewing Stripe's Idempotency Design &mdash; Hassan Malik
+  </title>
+  <meta content="An independent review of Stripe's idempotency design and its implications for reliable enterprise integrations, retries, and customer-facing delivery." name="description">
+  <link href="../assets/favicon.svg" rel="icon" type="image/svg+xml">
+  <link href="../assets/styles.css" rel="stylesheet">
+  <link href="https://hassanmalik.github.io/hassanmalikblog/posts/review-stripe-idempotent-integrations.html" rel="canonical">
+  <meta content="Reliable Integrations Start at the API Boundary: Reviewing Stripe's Idempotency Design &mdash; Hassan Malik" property="og:title">
+  <meta content="An independent review of Stripe's idempotency design and its implications for reliable enterprise integrations, retries, and customer-facing delivery." property="og:description">
+  <meta content="article" property="og:type">
+  <meta content="https://hassanmalik.github.io/hassanmalikblog/posts/review-stripe-idempotent-integrations.html" property="og:url">
+  <script type="application/ld+json">
+   {"@context":"https://schema.org","@type":"Article","headline":"Reliable Integrations Start at the API Boundary: Reviewing Stripe's Idempotency Design","author":{"@type":"Person","name":"Hassan Malik"},"datePublished":"2026-08-23","isBasedOn":"https://stripe.com/blog/idempotency","mainEntityOfPage":"https://hassanmalik.github.io/hassanmalikblog/posts/review-stripe-idempotent-integrations.html"}
+  </script>
+ </head>
+ <body>
+  <a class="skip-link" href="#main-content">
+   Skip to content
+  </a>
+  <header class="site-header">
+   <nav aria-label="Primary navigation" class="nav container">
+    <a class="brand" href="../index.html">
+     <span class="brand-mark">
+      HM
+     </span>
+     <span>
+      Hassan Malik
+     </span>
+    </a>
+    <div class="nav-links">
+     <a href="../index.html">
+      Home
+     </a>
+     <a aria-current="page" class="active" href="../blog.html">
+      Writing
+     </a>
+     <a href="../lab.html">
+      Lab
+     </a>
+     <a href="../about.html">
+      About
+     </a>
+     <a class="nav-cta" href="../contact.html">
+      Contact
+     </a>
+    </div>
+    <button aria-expanded="false" aria-label="Toggle navigation" class="mobile-toggle">
+     Menu
+    </button>
+   </nav>
+  </header>
+  <main class="article-shell" id="main-content">
+   <div class="eyebrow">
+    Publication review &middot; Stripe Engineering
+   </div>
+   <h1>
+    Reliable Integrations Start at the API Boundary: Reviewing Stripe's Idempotency Design
+   </h1>
+   <p class="article-dek">
+    A customer integration becomes safer when ambiguous network outcomes have one predictable recovery path.
+   </p>
+   <div class="article-meta">
+    <a class="article-author" href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">
+     Hassan Malik &nearrow;
+    </a>
+    &middot; 8 min read &middot; Published 2026-08-23
+   </div>
+   <div class="source-note">
+    <strong>
+     Source reviewed:
+    </strong>
+    Stripe Engineering,
+    <a href="https://stripe.com/blog/idempotency" rel="noopener noreferrer" target="_blank">
+     Designing robust and predictable APIs with idempotency &nearrow;
+    </a>
+    . This is an independent review; it is not affiliated with Stripe.
+   </div>
+   <article class="prose" data-archetype="Harden" data-article-type="Publication Review" data-pillar="Forward-Deployed Engineering">
+    <div class="article-context">
+     Publication Review &middot; Forward-Deployed Engineering &times; Harden &middot;
+     <span class="topic-tag">
+      Enterprise Integrations
+     </span>
+     &middot;
+     <span class="topic-tag">
+      Idempotency
+     </span>
+     &middot;
+     <span class="topic-tag">
+      API Reliability
+     </span>
+    </div>
+    <h2>
+     The engineering problem
+    </h2>
+    <p>
+     A client can lose the response after a server completes an operation. The client then cannot know whether retrying is necessary or dangerous. Stripe frames this ambiguity as a basic distributed-systems problem that appears even when only two systems communicate.
+    </p>
+    <h2>
+     The approach
+    </h2>
+    <p>
+     Idempotent operations let clients repeat a request without duplicating its effect. For mutating operations, an idempotency key gives the server a durable identity for the logical request. Stripe combines safe retries with exponential backoff and jitter so recovery does not amplify an outage.
+    </p>
+    <h2>
+     Tradeoffs
+    </h2>
+    <p>
+     The server must retain request identity and outcomes, define retention and conflict semantics, and decide how concurrent duplicates behave. Clients must reuse keys correctly and distinguish retryable failures from validation errors. Reliability is a shared protocol, not a header added at the end.
+    </p>
+    <h2>
+     What generalizes
+    </h2>
+    <p>
+     Forward-deployed teams often meet reliability at the integration boundary first. Stable identifiers, replay-safe commands, explicit status, reconciliation, and observable retries reduce adoption risk and support load while giving customer teams a predictable recovery model.
+    </p>
+    <h2>
+     What is context-dependent
+    </h2>
+    <p>
+     Not every operation can be made exactly repeatable, and external side effects may require sagas or reconciliation. Key retention, throughput, and consistency choices depend on business impact. Payment examples make duplication obviously serious; the same pattern also matters for provisioning, notifications, and workflow actions.
+    </p>
+    <h2>
+     Architecture review questions
+    </h2>
+    <ul>
+     <li>
+      What does the client know after a timeout?
+     </li>
+     <li>
+      Which operations are replay-safe and how is identity represented?
+     </li>
+     <li>
+      How are duplicate requests stored, expired, and observed?
+     </li>
+     <li>
+      Will retries help recovery or create a thundering herd?
+     </li>
+    </ul>
+    <p class="review-scope">
+     Stripe's article supplies the API pattern; the FDE and enterprise-integration implications are my synthesis.
+    </p>
+   </article>
+   <div class="article-next">
+    <span>
+     Related reading
+    </span>
+    <a href="forward-deployed-engineering-prototype-risk.html">
+     Prototype the Risk, Not the AI Demo &nearrow;
+    </a>
+   </div>
+  </main>
+  <footer class="footer">
+   <div class="container footer-grid">
+    <div>
+     &copy;
+     <span data-year>
+     </span>
+     Hassan Malik
+    </div>
+    <div class="footer-links">
+     <a href="../blog.html">
+      All writing
+     </a>
+     <a href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">
+      LinkedIn &nearrow;
+     </a>
+    </div>
+   </div>
+  </footer>
+  <script src="../assets/main.js">
+  </script>
+ </body>
+</html>

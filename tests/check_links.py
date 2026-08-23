@@ -5,7 +5,7 @@ from urllib.parse import urlparse
 ROOT=Path(__file__).resolve().parents[1]
 errors=[]
 for html in sorted(ROOT.rglob('*.html')):
-    if '.git' in html.parts: continue
+    if '.git' in html.parts or '.worktrees' in html.relative_to(ROOT).parts: continue
     soup=BeautifulSoup(html.read_text(encoding='utf-8'),'html.parser')
     for tag,attr in [('a','href'),('link','href'),('script','src')]:
         for node in soup.find_all(tag):

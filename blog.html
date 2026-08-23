@@ -1,7 +1,391 @@
 <!DOCTYPE html>
-
-<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Software Architecture, Applied AI &amp; FDE Writing — Hassan Malik</title><meta content="Technical essays and architecture reviews by Hassan Malik on distributed systems, production AI, biotech and life sciences software, enterprise RAG and forward deployed engineering." name="description"/><meta content="#f3f0e9" name="theme-color"/><link href="assets/favicon.svg" rel="icon" type="image/svg+xml"/><link href="assets/styles.css" rel="stylesheet"/><link href="https://hassanmalik.github.io/hassanmalikblog/blog.html" rel="canonical"/><meta content="Software Architecture, Applied AI &amp; FDE Writing — Hassan Malik" property="og:title"/><meta content="Technical essays and architecture reviews by Hassan Malik on distributed systems, production AI, biotech and life sciences software, enterprise RAG and forward deployed engineering." property="og:description"/><meta content="website" property="og:type"/><meta content="https://hassanmalik.github.io/hassanmalikblog/blog.html" property="og:url"/><meta content="Hassan Malik" name="author"/></head><body><header class="site-header"><nav aria-label="Primary navigation" class="nav container"><a class="brand" href="index.html"><span class="brand-mark">HM</span><span>Hassan Malik</span></a><div class="nav-links"><a class="" href="index.html">Home</a><a class="active" href="blog.html">Writing</a><a class="" href="lab.html">Lab</a><a class="" href="experience.html">Experience</a><a class="" href="about.html">About</a><a class="nav-cta" href="contact.html">Contact</a></div><a class="nav-side" href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">LinkedIn ↗</a><button aria-expanded="false" aria-label="Toggle navigation" class="mobile-toggle">Menu</button></nav></header><main><section class="page-hero"><div class="container"><div class="eyebrow">Writing / Systems</div><h1>Ideas for people who build.</h1><p>Technical essays and field notes on production AI, distributed systems, biotech software and the decisions that make systems reliable in the real world.</p></div></section>
-<section class="taxonomy"><div class="container taxonomy-row"><span class="taxonomy-label">Explore by system</span><a href="#architecture">AI Architecture</a><a href="#biotech">Biotech &amp; Life Sciences</a><a href="#fde">Forward Deployed Engineering</a><a href="#reviews">System Design</a><a href="#field-notes">Production Field Notes</a><a href="#leadership">Staff &amp; Principal Engineering</a></div></section>
-<section class="section"><div class="container"><a class="blog-feature" href="posts/ai-architecture-biotech-workflow-boundary.html" id="ai"><div class="blog-feature-copy"><div><div class="eyebrow">Featured / AI architecture + biotech</div><h2>AI Architecture for Biotech: Why Production AI Systems Fail at the Workflow Boundary</h2><p>A reference architecture for designing around identity, evidence, orchestration, model reasoning, controlled action, human review and feedback.</p></div><span class="text-link">Read architecture review ↗</span></div><div aria-hidden="true" class="blog-visual"></div></a></div></section>
-<section class="topic-map rule"><div class="container"><div class="topic-map-head"><span>Editorial map</span><p>Searchable by topic; connected by one thesis: production AI is a software systems problem.</p></div><div class="topic-map-grid"><div id="architecture"><b>Architecture</b><span>Distributed systems</span><span>Agentic AI</span><span>System design</span><span>Reliability</span></div><div id="biotech"><b>Scientific systems</b><span>Biotech</span><span>Life sciences</span><span>Scientific R&amp;D</span><span>Evidence &amp; provenance</span></div><div id="fde"><b>Field engineering</b><span>Forward Deployed Engineering</span><span>Technical discovery</span><span>Rapid prototyping</span><span>Production deployment</span></div><div id="reviews"><b>Production AI</b><span>Enterprise RAG</span><span>LLM evaluation</span><span>Human-in-the-loop</span><span>Observability</span></div></div></div></section>
-<section class="section"><div class="container"><div class="writing-list"><a class="writing-row" href="posts/distributed-systems-agentic-ai.html"><div class="writing-index">02</div><h3>Distributed Systems for Agentic AI: Retries, Idempotency and Failure Recovery</h3><div class="writing-meta">AI architecture &amp; distributed systems<br/>12 min</div></a><a class="writing-row" href="posts/enterprise-rag-scientific-rd.html"><div class="writing-index">03</div><h3>Enterprise RAG Architecture for Scientific R&amp;D: Retrieval, Evidence and Provenance</h3><div class="writing-meta">AI for biotech &amp; life sciences<br/>12 min</div></a><a class="writing-row" href="posts/forward-deployed-engineering-prototype-risk.html"><div class="writing-index">04</div><h3>Forward Deployed Engineering: Prototype the Risk, Not the AI Demo</h3><div class="writing-meta">Forward Deployed Engineering<br/>10 min</div></a><a class="writing-row" href="posts/biotech-ai-stack.html"><div class="writing-index">05</div><h3>The Production AI Stack for Biotech R&amp;D</h3><div class="writing-meta">System design &amp; architecture reviews<br/>8 min</div></a><a class="writing-row" href="posts/scientist-adoption.html" id="field-notes"><div class="writing-index">06</div><h3>Why Adoption Is an Architecture Problem in Scientific Software</h3><div class="writing-meta">Production engineering field notes<br/>6 min</div></a><a class="writing-row" href="posts/decision-systems.html"><div class="writing-index">07</div><h3>Dashboards Are Not Decision Systems</h3><div class="writing-meta">Data platforms / field notes<br/>5 min</div></a><a class="writing-row" href="posts/software-operations.html" id="leadership"><div class="writing-index">08</div><h3>Operating Across Software and Operations</h3><div class="writing-meta">Technical leadership<br/>6 min</div></a></div></div></section></main><footer class="footer"><div class="container footer-grid"><div>© <span data-year=""></span> Hassan Malik · Connecticut / Boston</div><div class="footer-links"><a href="blog.html">Writing</a><a href="lab.html">Lab</a><a href="experience.html">Experience</a><a href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">LinkedIn ↗</a><a href="https://github.com/hassanmalik">GitHub ↗</a></div></div></footer><script src="assets/main.js"></script></body></html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width,initial-scale=1" name="viewport">
+  <title>
+   Engineering Writing &mdash; Hassan Malik
+  </title>
+  <meta content="Engineering essays and source reviews on architecture, AI and data, platforms, reliability, technical leadership, and forward-deployed engineering." name="description">
+  <link href="assets/favicon.svg" rel="icon" type="image/svg+xml">
+  <link href="assets/styles.css" rel="stylesheet">
+  <link href="https://hassanmalik.github.io/hassanmalikblog/blog.html" rel="canonical">
+  <meta content="Engineering Writing &mdash; Hassan Malik" property="og:title">
+  <meta content="Engineering essays and source reviews on architecture, AI and data, platforms, reliability, technical leadership, and forward-deployed engineering." property="og:description">
+  <meta content="website" property="og:type">
+  <meta content="https://hassanmalik.github.io/hassanmalikblog/blog.html" property="og:url">
+  <script type="application/ld+json">
+   {"@context":"https://schema.org","@type":"CollectionPage","name":"Engineering Writing","url":"https://hassanmalik.github.io/hassanmalikblog/blog.html","author":{"@type":"Person","name":"Hassan Malik"}}
+  </script>
+ </head>
+ <body>
+  <a class="skip-link" href="#main-content">
+   Skip to content
+  </a>
+  <header class="site-header">
+   <nav aria-label="Primary navigation" class="nav container">
+    <a class="brand" href="index.html">
+     <span class="brand-mark">
+      HM
+     </span>
+     <span>
+      Hassan Malik
+     </span>
+    </a>
+    <div class="nav-links">
+     <a href="index.html">
+      Home
+     </a>
+     <a aria-current="page" class="active" href="blog.html">
+      Writing
+     </a>
+     <a href="lab.html">
+      Lab
+     </a>
+     <a href="about.html">
+      About
+     </a>
+     <a class="nav-cta" href="contact.html">
+      Contact
+     </a>
+    </div>
+    <a class="nav-side" href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">
+     LinkedIn &nearrow;
+    </a>
+    <button aria-expanded="false" aria-label="Toggle navigation" class="mobile-toggle">
+     Menu
+    </button>
+   </nav>
+  </header>
+  <main id="main-content">
+   <section class="page-hero">
+    <div class="container">
+     <div class="eyebrow">
+      Domain &times; engineering problem
+     </div>
+     <h1>
+      Writing for systems that meet reality.
+     </h1>
+     <p>
+      Original essays and independent publication reviews about architecture, production AI, platforms, reliability, scale, technical leadership, and forward-deployed engineering.
+     </p>
+    </div>
+   </section>
+   <section class="section pillar-directory">
+    <div class="container">
+     <div class="pillar-grid">
+      <a class="pillar-card" href="#writing" id="architecture">
+       <span>
+        01
+       </span>
+       <h3>
+        Architecture
+       </h3>
+       <p>
+        Systems, boundaries, APIs, databases, and tradeoffs.
+       </p>
+      </a>
+      <a class="pillar-card" href="#writing" id="ai-data">
+       <span>
+        02
+       </span>
+       <h3>
+        AI & Data
+       </h3>
+       <p>
+        LLMs, RAG, ML platforms, pipelines, and evaluation.
+       </p>
+      </a>
+      <a class="pillar-card" href="#writing" id="platform">
+       <span>
+        03
+       </span>
+       <h3>
+        Platform & Infrastructure
+       </h3>
+       <p>
+        Cloud, delivery, developer experience, and automation.
+       </p>
+      </a>
+      <a class="pillar-card" href="#writing" id="reliability">
+       <span>
+        04
+       </span>
+       <h3>
+        Reliability & Scale
+       </h3>
+       <p>
+        Resilience, failure modes, performance, and capacity.
+       </p>
+      </a>
+      <a class="pillar-card" href="#writing" id="leadership">
+       <span>
+        05
+       </span>
+       <h3>
+        Technical Leadership
+       </h3>
+       <p>
+        Strategy, reviews, standards, and cross-team influence.
+       </p>
+      </a>
+      <a class="pillar-card" href="#writing" id="fde">
+       <span>
+        06
+       </span>
+       <h3>
+        Forward-Deployed Engineering
+       </h3>
+       <p>
+        Discovery, prototypes, integrations, and adoption.
+       </p>
+      </a>
+     </div>
+    </div>
+   </section>
+   <section class="section section-compact" id="writing">
+    <div class="container">
+     <div aria-label="Filter writing" class="filter-shell">
+      <div class="filter-group">
+       <span>
+        Problem
+       </span>
+       <button aria-pressed="true" class="filter-button" data-filter-kind="all" data-filter-value="all">
+        All
+       </button>
+       <button aria-pressed="false" class="filter-button" data-filter-kind="archetype" data-filter-value="Build">
+        Build
+       </button>
+       <button aria-pressed="false" class="filter-button" data-filter-kind="archetype" data-filter-value="Scale">
+        Scale
+       </button>
+       <button aria-pressed="false" class="filter-button" data-filter-kind="archetype" data-filter-value="Migrate">
+        Migrate
+       </button>
+       <button aria-pressed="false" class="filter-button" data-filter-kind="archetype" data-filter-value="Optimize">
+        Optimize
+       </button>
+       <button aria-pressed="false" class="filter-button" data-filter-kind="archetype" data-filter-value="Harden">
+        Harden
+       </button>
+       <button aria-pressed="false" class="filter-button" data-filter-kind="archetype" data-filter-value="Design">
+        Design
+       </button>
+       <button aria-pressed="false" class="filter-button" data-filter-kind="archetype" data-filter-value="Strategize">
+        Strategize
+       </button>
+      </div>
+      <div class="filter-group">
+       <span>
+        Domain
+       </span>
+       <button aria-pressed="false" class="filter-button" data-filter-kind="pillar" data-filter-value="Architecture">
+        Architecture
+       </button>
+       <button aria-pressed="false" class="filter-button" data-filter-kind="pillar" data-filter-value="AI & Data">
+        AI & Data
+       </button>
+       <button aria-pressed="false" class="filter-button" data-filter-kind="pillar" data-filter-value="Platform & Infrastructure">
+        Platform
+       </button>
+       <button aria-pressed="false" class="filter-button" data-filter-kind="pillar" data-filter-value="Reliability & Scale">
+        Reliability
+       </button>
+       <button aria-pressed="false" class="filter-button" data-filter-kind="pillar" data-filter-value="Technical Leadership">
+        Leadership
+       </button>
+       <button aria-pressed="false" class="filter-button" data-filter-kind="pillar" data-filter-value="Forward-Deployed Engineering">
+        FDE
+       </button>
+      </div>
+      <p data-results-count role="status">
+       Showing 14 articles
+      </p>
+     </div>
+     <div class="publication-grid">
+      <a class="publication-card" data-archetype="Design" data-article-type="Original Essay" data-pillar="AI & Data" href="posts/ai-architecture-biotech-workflow-boundary.html">
+       <p class="classification">
+        AI & Data &times; Design
+       </p>
+       <h2>
+        AI Architecture for Biotech: Why Production AI Systems Fail at the Workflow Boundary
+       </h2>
+       <p>
+        Original essay &middot; 11 min
+       </p>
+      </a>
+      <a class="publication-card" data-archetype="Build" data-article-type="Original Essay" data-pillar="AI & Data" href="posts/biotech-ai-stack.html">
+       <p class="classification">
+        AI & Data &times; Build
+       </p>
+       <h2>
+        The Production AI Stack for Biotech R&D
+       </h2>
+       <p>
+        Original essay &middot; 8 min
+       </p>
+      </a>
+      <a class="publication-card" data-archetype="Strategize" data-article-type="Original Essay" data-pillar="Technical Leadership" href="posts/decision-systems.html">
+       <p class="classification">
+        Technical Leadership &times; Strategize
+       </p>
+       <h2>
+        Dashboards Are Not Decision Systems
+       </h2>
+       <p>
+        Original essay &middot; 5 min
+       </p>
+      </a>
+      <a class="publication-card" data-archetype="Harden" data-article-type="Original Essay" data-pillar="Reliability & Scale" href="posts/distributed-systems-agentic-ai.html">
+       <p class="classification">
+        Reliability & Scale &times; Harden
+       </p>
+       <h2>
+        Distributed Systems for Agentic AI
+       </h2>
+       <p>
+        Original essay &middot; 12 min
+       </p>
+      </a>
+      <a class="publication-card" data-archetype="Design" data-article-type="Original Essay" data-pillar="AI & Data" href="posts/enterprise-rag-scientific-rd.html">
+       <p class="classification">
+        AI & Data &times; Design
+       </p>
+       <h2>
+        Enterprise RAG Architecture for Scientific R&D
+       </h2>
+       <p>
+        Original essay &middot; 12 min
+       </p>
+      </a>
+      <a class="publication-card" data-archetype="Build" data-article-type="Original Essay" data-pillar="Forward-Deployed Engineering" href="posts/forward-deployed-engineering-prototype-risk.html">
+       <p class="classification">
+        Forward-Deployed Engineering &times; Build
+       </p>
+       <h2>
+        Prototype the Risk, Not the AI Demo
+       </h2>
+       <p>
+        Original essay &middot; 10 min
+       </p>
+      </a>
+      <a class="publication-card" data-archetype="Strategize" data-article-type="Original Essay" data-pillar="Forward-Deployed Engineering" href="posts/scientist-adoption.html">
+       <p class="classification">
+        Forward-Deployed Engineering &times; Strategize
+       </p>
+       <h2>
+        Why Adoption Is an Architecture Problem
+       </h2>
+       <p>
+        Original essay &middot; 6 min
+       </p>
+      </a>
+      <a class="publication-card" data-archetype="Strategize" data-article-type="Original Essay" data-pillar="Technical Leadership" href="posts/software-operations.html">
+       <p class="classification">
+        Technical Leadership &times; Strategize
+       </p>
+       <h2>
+        Operating Across Software and Operations
+       </h2>
+       <p>
+        Original essay &middot; 6 min
+       </p>
+      </a>
+      <a class="publication-card review-card" data-archetype="Design" data-article-type="Publication Review" data-pillar="Architecture" href="posts/review-evolutionary-architecture.html">
+       <p class="classification">
+        Architecture &times; Design
+       </p>
+       <h2>
+        Evolutionary Architecture: Designing for Change Without Abandoning Direction
+       </h2>
+       <p>
+        Publication review &middot; Martin Fowler
+       </p>
+      </a>
+      <a class="publication-card review-card" data-archetype="Scale" data-article-type="Publication Review" data-pillar="AI & Data" href="posts/review-uber-michelangelo-ml-platform.html">
+       <p class="classification">
+        AI & Data &times; Scale
+       </p>
+       <h2>
+        Beyond the Model: Reviewing Uber's Michelangelo
+       </h2>
+       <p>
+        Publication review &middot; Uber Engineering
+       </p>
+      </a>
+      <a class="publication-card review-card" data-archetype="Build" data-article-type="Publication Review" data-pillar="Platform & Infrastructure" href="posts/review-cloudflare-radar-platform.html">
+       <p class="classification">
+        Platform & Infrastructure &times; Build
+       </p>
+       <h2>
+        Platform Architecture Through Constraints
+       </h2>
+       <p>
+        Publication review &middot; Cloudflare Engineering
+       </p>
+      </a>
+      <a class="publication-card review-card" data-archetype="Harden" data-article-type="Publication Review" data-pillar="Reliability & Scale" href="posts/review-netflix-chaos-engineering.html">
+       <p class="classification">
+        Reliability & Scale &times; Harden
+       </p>
+       <h2>
+        Designing for Failure: Reviewing Netflix's Simian Army
+       </h2>
+       <p>
+        Publication review &middot; Netflix TechBlog
+       </p>
+      </a>
+      <a class="publication-card review-card" data-archetype="Strategize" data-article-type="Publication Review" data-pillar="Technical Leadership" href="posts/review-staffeng-technical-leadership.html">
+       <p class="classification">
+        Technical Leadership &times; Strategize
+       </p>
+       <h2>
+        Technical Leadership Has More Than One Shape
+       </h2>
+       <p>
+        Publication review &middot; StaffEng
+       </p>
+      </a>
+      <a class="publication-card review-card" data-archetype="Harden" data-article-type="Publication Review" data-pillar="Forward-Deployed Engineering" href="posts/review-stripe-idempotent-integrations.html">
+       <p class="classification">
+        Forward-Deployed Engineering &times; Harden
+       </p>
+       <h2>
+        Reliable Integrations Start at the API Boundary
+       </h2>
+       <p>
+        Publication review &middot; Stripe Engineering
+       </p>
+      </a>
+     </div>
+    </div>
+   </section>
+  </main>
+  <footer class="footer">
+   <div class="container footer-grid">
+    <div>
+     &copy;
+     <span data-year>
+     </span>
+     Hassan Malik
+    </div>
+    <div class="footer-links">
+     <a href="index.html">
+      Home
+     </a>
+     <a href="about.html">
+      About
+     </a>
+     <a href="contact.html">
+      Contact
+     </a>
+     <a href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">
+      LinkedIn &nearrow;
+     </a>
+    </div>
+   </div>
+  </footer>
+  <script src="assets/main.js">
+  </script>
+ </body>
+</html>

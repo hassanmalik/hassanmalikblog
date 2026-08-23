@@ -2,7 +2,7 @@ from pathlib import Path
 import re
 
 ROOT = Path(__file__).resolve().parents[1]
-HTML = sorted([p for p in ROOT.rglob('*.html') if '.git' not in p.parts])
+HTML = sorted([p for p in ROOT.rglob('*.html') if '.git' not in p.parts and '.worktrees' not in p.relative_to(ROOT).parts])
 CORRECT = 'https://www.linkedin.com/in/malik-msee/'
 OLD = 'https://www.linkedin.com/in/msee-ba-da'
 

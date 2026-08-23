@@ -1,2 +1,4 @@
 .DS_Store
+.worktrees/
+.venv/
 Thumbs.db

@@ -1,5 +1,144 @@
 <!DOCTYPE html>
-
-<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Dashboards Are Not Decision Systems — Hassan Malik</title><link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/><link href="../assets/styles.css" rel="stylesheet"/><link href="https://hassanmalik.github.io/hassanmalikblog/posts/decision-systems.html" rel="canonical"/><meta content="https://hassanmalik.github.io/hassanmalikblog/posts/decision-systems.html" property="og:url"/><meta content="Hassan Malik" name="author"/><meta content="A production engineering field note on moving from dashboards and metrics to operational decision systems with ownership, intervention and feedback." name="description"/><meta content="Dashboards Are Not Decision Systems" property="og:title"/><meta content="A production engineering field note on moving from dashboards and metrics to operational decision systems with ownership, intervention and feedback." property="og:description"/><meta content="article" property="og:type"/><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Dashboards Are Not Decision Systems","description":"A production engineering field note on moving from dashboards and metrics to operational decision systems with ownership, intervention and feedback.","author":{"@type":"Person","name":"Hassan Malik","url":"https://hassanmalik.github.io/hassanmalikblog/","sameAs":["https://www.linkedin.com/in/malik-msee/","https://github.com/hassanmalik"]},"dateModified":"2026-08-22","mainEntityOfPage":"https://hassanmalik.github.io/hassanmalikblog/posts/decision-systems.html","keywords":["decision systems","data platforms","analytics","production engineering"]}</script></head><body>
-<header class="site-header"><nav class="nav container"><a class="brand" href="../index.html"><span class="brand-mark">HM</span><span>Hassan Malik</span></a><button aria-expanded="false" class="mobile-toggle">Menu</button><div class="nav-links"><a href="../index.html">Home</a><a class="active" href="../blog.html">Writing</a><a href="../lab.html">Lab</a><a href="../experience.html">Experience</a><a href="../about.html">About</a></div></nav></header>
-<main class="article-shell"><div class="eyebrow">Data systems</div><h1>Dashboards Are Not Decision Systems</h1><p class="article-dek">A chart can make a problem visible. A system creates a reliable path from signal to action.</p><div class="article-meta"><a class="article-author" href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">Hassan Malik ↗</a> · 5 min read</div><article class="prose"><p>I’ve worked in environments where dashboards mattered enormously: logistics, returns, supply chain, manufacturing programs, and R&amp;D. The best ones did more than display numbers. They shortened the distance between seeing a problem and doing something about it.</p><h2>The decision loop</h2><p>A useful operational system needs five things: a signal, context, an owner, an available intervention, and feedback on whether the intervention worked.</p><h2>Visibility without ownership stalls</h2><p>A metric that turns red but has no clear owner is an observation, not an operating mechanism. Likewise, a dashboard that requires five other systems to investigate the cause pushes the hard work back onto the user.</p><h2>Build toward intervention</h2><p>The evolution is simple: dashboard → diagnostic context → recommended action → controlled automation. Not every process should reach full automation, but every important metric should have a designed path to action.</p></article></main><footer class="footer"><div class="container footer-grid"><div>© <span data-year=""></span> Hassan Malik</div><div class="footer-links"><a href="../blog.html">All writing</a><a href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">LinkedIn ↗</a></div></div></footer><script src="../assets/main.js"></script></body></html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width,initial-scale=1" name="viewport">
+  <title>
+   Dashboards Are Not Decision Systems &mdash; Hassan Malik
+  </title>
+  <link href="../assets/favicon.svg" rel="icon" type="image/svg+xml">
+  <link href="../assets/styles.css" rel="stylesheet">
+  <link href="https://hassanmalik.github.io/hassanmalikblog/posts/decision-systems.html" rel="canonical">
+  <meta content="https://hassanmalik.github.io/hassanmalikblog/posts/decision-systems.html" property="og:url">
+  <meta content="Hassan Malik" name="author">
+  <meta content="A production engineering field note on moving from dashboards and metrics to operational decision systems with ownership, intervention and feedback." name="description">
+  <meta content="Dashboards Are Not Decision Systems &mdash; Hassan Malik" property="og:title">
+  <meta content="A production engineering field note on moving from dashboards and metrics to operational decision systems with ownership, intervention and feedback." property="og:description">
+  <meta content="article" property="og:type">
+  <script type="application/ld+json">
+   {"@context":"https://schema.org","@type":"BlogPosting","headline":"Dashboards Are Not Decision Systems","description":"A production engineering field note on moving from dashboards and metrics to operational decision systems with ownership, intervention and feedback.","author":{"@type":"Person","name":"Hassan Malik","url":"https://hassanmalik.github.io/hassanmalikblog/","sameAs":["https://www.linkedin.com/in/malik-msee/","https://github.com/hassanmalik"]},"dateModified":"2026-08-22","mainEntityOfPage":"https://hassanmalik.github.io/hassanmalikblog/posts/decision-systems.html","keywords":["decision systems","data platforms","analytics","production engineering"]}
+  </script>
+ </head>
+ <body>
+  <a class="skip-link" href="#main-content">
+   Skip to content
+  </a>
+  <header class="site-header">
+   <nav class="nav container">
+    <a class="brand" href="../index.html">
+     <span class="brand-mark">
+      HM
+     </span>
+     <span>
+      Hassan Malik
+     </span>
+    </a>
+    <button aria-expanded="false" aria-label="Toggle navigation" class="mobile-toggle">
+     Menu
+    </button>
+    <div class="nav-links">
+     <a href="../index.html">
+      Home
+     </a>
+     <a class="active" href="../blog.html">
+      Writing
+     </a>
+     <a href="../lab.html">
+      Lab
+     </a>
+     <a href="../experience.html">
+      Experience
+     </a>
+     <a href="../about.html">
+      About
+     </a>
+     <a class="nav-cta" href="../contact.html">
+      Contact
+     </a>
+    </div>
+   </nav>
+  </header>
+  <main class="article-shell" id="main-content">
+   <div class="eyebrow">
+    Data systems
+   </div>
+   <h1>
+    Dashboards Are Not Decision Systems
+   </h1>
+   <p class="article-dek">
+    A chart can make a problem visible. A system creates a reliable path from signal to action.
+   </p>
+   <div class="article-meta">
+    <a class="article-author" href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">
+     Hassan Malik &nearrow;
+    </a>
+    &middot; 5 min read
+   </div>
+   <article class="prose" data-archetype="Strategize" data-article-type="Original Essay" data-pillar="Technical Leadership">
+    <div class="article-context">
+     Original Essay &middot; Technical Leadership &times; Strategize &middot;
+     <span class="topic-tag">
+      Decision Systems
+     </span>
+     &middot;
+     <span class="topic-tag">
+      Ownership
+     </span>
+     &middot;
+     <span class="topic-tag">
+      Operating Models
+     </span>
+    </div>
+    <p>
+     I&rsquo;ve worked in environments where dashboards mattered enormously: logistics, returns, supply chain, manufacturing programs, and R&D. The best ones did more than display numbers. They shortened the distance between seeing a problem and doing something about it.
+    </p>
+    <h2>
+     The decision loop
+    </h2>
+    <p>
+     A useful operational system needs five things: a signal, context, an owner, an available intervention, and feedback on whether the intervention worked.
+    </p>
+    <h2>
+     Visibility without ownership stalls
+    </h2>
+    <p>
+     A metric that turns red but has no clear owner is an observation, not an operating mechanism. Likewise, a dashboard that requires five other systems to investigate the cause pushes the hard work back onto the user.
+    </p>
+    <h2>
+     Build toward intervention
+    </h2>
+    <p>
+     The evolution is simple: dashboard &rarr; diagnostic context &rarr; recommended action &rarr; controlled automation. Not every process should reach full automation, but every important metric should have a designed path to action.
+    </p>
+   </article>
+   <div class="article-next">
+    <span>
+     Related reading
+    </span>
+    <a href="software-operations.html">
+     Continue reading &nearrow;
+    </a>
+   </div>
+  </main>
+  <footer class="footer">
+   <div class="container footer-grid">
+    <div>
+     &copy;
+     <span data-year>
+     </span>
+     Hassan Malik
+    </div>
+    <div class="footer-links">
+     <a href="../blog.html">
+      All writing
+     </a>
+     <a href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">
+      LinkedIn &nearrow;
+     </a>
+    </div>
+   </div>
+  </footer>
+  <script src="../assets/main.js">
+  </script>
+ </body>
+</html>

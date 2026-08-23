@@ -1,59 +1,329 @@
 <!DOCTYPE html>
-
-<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Distributed Systems for Agentic AI: Retries, Idempotency and Failure Recovery — Hassan Malik</title><meta content="A software architecture guide to state ownership, retries, idempotency, durable execution, partial failure and observability in production agentic AI systems." name="description"/><meta content="#f3f0e9" name="theme-color"/><link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/><link href="../assets/styles.css" rel="stylesheet"/><link href="https://hassanmalik.github.io/hassanmalikblog/posts/distributed-systems-agentic-ai.html" rel="canonical"/><meta content="Distributed Systems for Agentic AI: Retries, Idempotency and Failure Recovery" property="og:title"/><meta content="A software architecture guide to state ownership, retries, idempotency, durable execution, partial failure and observability in production agentic AI systems." property="og:description"/><meta content="article" property="og:type"/><meta content="https://hassanmalik.github.io/hassanmalikblog/posts/distributed-systems-agentic-ai.html" property="og:url"/><meta content="2026-08-22" property="article:published_time"/><meta content="2026-08-22" property="article:modified_time"/><meta content="Hassan Malik" name="author"/><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Distributed Systems for Agentic AI: Retries, Idempotency and Failure Recovery","description":"A software architecture guide to state ownership, retries, idempotency, durable execution, partial failure and observability in production agentic AI systems.","author":{"@type":"Person","name":"Hassan Malik","url":"https://hassanmalik.github.io/hassanmalikblog/","sameAs":["https://www.linkedin.com/in/malik-msee/","https://github.com/hassanmalik"]},"datePublished":"2026-08-22","dateModified":"2026-08-22","mainEntityOfPage":"https://hassanmalik.github.io/hassanmalikblog/posts/distributed-systems-agentic-ai.html","keywords":["distributed systems","agentic AI","AI agents","idempotency","retries","failure recovery","durable execution","LLM observability"],"publisher":{"@type":"Person","name":"Hassan Malik","sameAs":["https://www.linkedin.com/in/malik-msee/","https://github.com/hassanmalik"]}}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://hassanmalik.github.io/hassanmalikblog/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://hassanmalik.github.io/hassanmalikblog/blog.html"},{"@type":"ListItem","position":3,"name":"Distributed Systems for Agentic AI: Retries, Idempotency and Failure Recovery","item":"https://hassanmalik.github.io/hassanmalikblog/posts/distributed-systems-agentic-ai.html"}]}</script></head><body><header class="site-header"><nav aria-label="Primary navigation" class="nav container"><a class="brand" href="../index.html"><span class="brand-mark">HM</span><span>Hassan Malik</span></a><div class="nav-links"><a class="" href="../index.html">Home</a><a class="active" href="../blog.html">Writing</a><a class="" href="../lab.html">Lab</a><a class="" href="../experience.html">Experience</a><a class="" href="../about.html">About</a><a class="nav-cta" href="../contact.html">Contact</a></div><a class="nav-side" href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">LinkedIn ↗</a><button aria-expanded="false" aria-label="Toggle navigation" class="mobile-toggle">Menu</button></nav></header><main class="article-shell"><div class="eyebrow">AI architecture · Distributed systems</div><h1>Distributed Systems for Agentic AI: Retries, Idempotency and Failure Recovery</h1><p class="article-dek">When an AI agent can call tools and change state, the hardest failures look less like prompt bugs and more like distributed-systems failures.</p><div class="article-meta"><a class="article-author" href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">Hassan Malik ↗</a> · 12 min read · Published 2026-08-22</div><div class="article-context">Independent reference architecture. No employer-confidential systems or data.</div><article class="prose">
-<p>Agentic AI systems are often presented as a new application pattern. Operationally, many of their hardest problems are old distributed-systems problems wearing a probabilistic interface.</p>
-<p>The moment an agent can call tools, wait on external services, mutate state or continue a task after failure, the architecture has to answer familiar questions: What is durable? What can be retried? What is idempotent? What happens after partial execution? Which component owns the workflow state?</p>
-<h2>A simple agent can create a partial-failure problem</h2>
-<p>Imagine an agent plan with four actions:</p>
-<pre><code>1. Create analysis record
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width,initial-scale=1" name="viewport">
+  <title>
+   Distributed Systems for Agentic AI: Retries, Idempotency and Failure Recovery &mdash; Hassan Malik
+  </title>
+  <meta content="A software architecture guide to state ownership, retries, idempotency, durable execution, partial failure and observability in production agentic AI systems." name="description">
+  <meta content="#f3f0e9" name="theme-color">
+  <link href="../assets/favicon.svg" rel="icon" type="image/svg+xml">
+  <link href="../assets/styles.css" rel="stylesheet">
+  <link href="https://hassanmalik.github.io/hassanmalikblog/posts/distributed-systems-agentic-ai.html" rel="canonical">
+  <meta content="Distributed Systems for Agentic AI: Retries, Idempotency and Failure Recovery &mdash; Hassan Malik" property="og:title">
+  <meta content="A software architecture guide to state ownership, retries, idempotency, durable execution, partial failure and observability in production agentic AI systems." property="og:description">
+  <meta content="article" property="og:type">
+  <meta content="https://hassanmalik.github.io/hassanmalikblog/posts/distributed-systems-agentic-ai.html" property="og:url">
+  <meta content="2026-08-22" property="article:published_time">
+  <meta content="2026-08-22" property="article:modified_time">
+  <meta content="Hassan Malik" name="author">
+  <script type="application/ld+json">
+   {"@context":"https://schema.org","@type":"BlogPosting","headline":"Distributed Systems for Agentic AI: Retries, Idempotency and Failure Recovery","description":"A software architecture guide to state ownership, retries, idempotency, durable execution, partial failure and observability in production agentic AI systems.","author":{"@type":"Person","name":"Hassan Malik","url":"https://hassanmalik.github.io/hassanmalikblog/","sameAs":["https://www.linkedin.com/in/malik-msee/","https://github.com/hassanmalik"]},"datePublished":"2026-08-22","dateModified":"2026-08-22","mainEntityOfPage":"https://hassanmalik.github.io/hassanmalikblog/posts/distributed-systems-agentic-ai.html","keywords":["distributed systems","agentic AI","AI agents","idempotency","retries","failure recovery","durable execution","LLM observability"],"publisher":{"@type":"Person","name":"Hassan Malik","sameAs":["https://www.linkedin.com/in/malik-msee/","https://github.com/hassanmalik"]}}
+  </script>
+  <script type="application/ld+json">
+   {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://hassanmalik.github.io/hassanmalikblog/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://hassanmalik.github.io/hassanmalikblog/blog.html"},{"@type":"ListItem","position":3,"name":"Distributed Systems for Agentic AI: Retries, Idempotency and Failure Recovery","item":"https://hassanmalik.github.io/hassanmalikblog/posts/distributed-systems-agentic-ai.html"}]}
+  </script>
+ </head>
+ <body>
+  <a class="skip-link" href="#main-content">
+   Skip to content
+  </a>
+  <header class="site-header">
+   <nav aria-label="Primary navigation" class="nav container">
+    <a class="brand" href="../index.html">
+     <span class="brand-mark">
+      HM
+     </span>
+     <span>
+      Hassan Malik
+     </span>
+    </a>
+    <div class="nav-links">
+     <a class="" href="../index.html">
+      Home
+     </a>
+     <a class="active" href="../blog.html">
+      Writing
+     </a>
+     <a class="" href="../lab.html">
+      Lab
+     </a>
+     <a class="" href="../experience.html">
+      Experience
+     </a>
+     <a class="" href="../about.html">
+      About
+     </a>
+     <a class="nav-cta" href="../contact.html">
+      Contact
+     </a>
+    </div>
+    <a class="nav-side" href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">
+     LinkedIn &nearrow;
+    </a>
+    <button aria-expanded="false" aria-label="Toggle navigation" class="mobile-toggle">
+     Menu
+    </button>
+   </nav>
+  </header>
+  <main class="article-shell" id="main-content">
+   <div class="eyebrow">
+    AI architecture &middot; Distributed systems
+   </div>
+   <h1>
+    Distributed Systems for Agentic AI: Retries, Idempotency and Failure Recovery
+   </h1>
+   <p class="article-dek">
+    When an AI agent can call tools and change state, the hardest failures look less like prompt bugs and more like distributed-systems failures.
+   </p>
+   <div class="article-meta">
+    <a class="article-author" href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">
+     Hassan Malik &nearrow;
+    </a>
+    &middot; 12 min read &middot; Published 2026-08-22
+   </div>
+   <div class="article-context">
+    Independent reference architecture. No employer-confidential systems or data.
+   </div>
+   <article class="prose" data-archetype="Harden" data-article-type="Original Essay" data-pillar="Reliability & Scale">
+    <div class="article-context">
+     Original Essay &middot; Reliability & Scale &times; Harden &middot;
+     <span class="topic-tag">
+      AI Agents
+     </span>
+     &middot;
+     <span class="topic-tag">
+      Distributed Systems
+     </span>
+     &middot;
+     <span class="topic-tag">
+      Idempotency
+     </span>
+     &middot;
+     <span class="topic-tag">
+      Observability
+     </span>
+    </div>
+    <p>
+     Agentic AI systems are often presented as a new application pattern. Operationally, many of their hardest problems are old distributed-systems problems wearing a probabilistic interface.
+    </p>
+    <p>
+     The moment an agent can call tools, wait on external services, mutate state or continue a task after failure, the architecture has to answer familiar questions: What is durable? What can be retried? What is idempotent? What happens after partial execution? Which component owns the workflow state?
+    </p>
+    <h2>
+     A simple agent can create a partial-failure problem
+    </h2>
+    <p>
+     Imagine an agent plan with four actions:
+    </p>
+    <pre><code>1. Create analysis record
 2. Update metadata
 3. Notify reviewer
 4. Schedule downstream job</code></pre>
-<p>Steps one and two succeed. Step three times out. The model retries the plan from the beginning. If the tools are not designed for retries, you may now have duplicate records, conflicting metadata or multiple downstream jobs.</p>
-<p>This is not primarily a prompting problem. It is a transaction and state-management problem.</p>
-<h2>Principle 1: the agent should not be the durable state machine</h2>
-<p>A model can decide among options, decompose a request or propose a next action. Durable workflow state should live in a system that can be inspected independently of the model: a workflow engine, database-backed state machine or application service.</p>
-<p>That gives the system a stable answer to “what has already happened?” even if the model call is retried, the process restarts or a different model completes the next step.</p>
-<h2>Principle 2: design tool calls for idempotency</h2>
-<p>For consequential tools, give each logical operation an idempotency key. If the same request is replayed, the service should return the prior result rather than execute the side effect again.</p>
-<pre><code>tool_request {
+    <p>
+     Steps one and two succeed. Step three times out. The model retries the plan from the beginning. If the tools are not designed for retries, you may now have duplicate records, conflicting metadata or multiple downstream jobs.
+    </p>
+    <p>
+     This is not primarily a prompting problem. It is a transaction and state-management problem.
+    </p>
+    <h2>
+     Principle 1: the agent should not be the durable state machine
+    </h2>
+    <p>
+     A model can decide among options, decompose a request or propose a next action. Durable workflow state should live in a system that can be inspected independently of the model: a workflow engine, database-backed state machine or application service.
+    </p>
+    <p>
+     That gives the system a stable answer to &ldquo;what has already happened?&rdquo; even if the model call is retried, the process restarts or a different model completes the next step.
+    </p>
+    <h2>
+     Principle 2: design tool calls for idempotency
+    </h2>
+    <p>
+     For consequential tools, give each logical operation an idempotency key. If the same request is replayed, the service should return the prior result rather than execute the side effect again.
+    </p>
+    <pre><code>tool_request {
   operation: "create_review_case",
   idempotency_key: "workflow-842:step-03",
   payload: {...}
 }</code></pre>
-<p>Idempotency is especially important when the caller is probabilistic because duplicate intent can arise from network retry, orchestration retry, model re-planning or human re-submission.</p>
-<h2>Principle 3: classify retries by failure type</h2>
-<p>“Retry three times” is not a strategy. Distinguish transient failures from semantic failures.</p>
-<ul><li><strong>Transient infrastructure failure:</strong> timeout, 502, temporary capacity issue. Retry with bounded backoff.</li><li><strong>Rate limiting:</strong> respect retry-after signals and propagate pressure upstream.</li><li><strong>Validation failure:</strong> do not repeat the same invalid tool call; return structured error context for repair.</li><li><strong>Permission failure:</strong> never let a model “reason around” authorization.</li><li><strong>Unknown execution status:</strong> query operation state before deciding whether to replay.</li></ul>
-<h2>Principle 4: make partial execution a first-class state</h2>
-<p>Distributed workflows do not fail atomically. A useful orchestrator should represent states such as <code>tool_succeeded_review_pending</code> or <code>action_unknown_reconciliation_required</code>, not collapse everything into “agent failed.”</p>
-<p>For operations that cannot be rolled back, define compensating actions. Compensation is not a true distributed transaction; it is an explicit business-level recovery path.</p>
-<h2>Principle 5: use human gates at irreversible boundaries</h2>
-<p>Human review is most valuable when the next action is expensive, externally visible, destructive or hard to reverse. A reviewer should see the proposed action, evidence, tool inputs and current workflow state—not just a generated paragraph.</p>
-<h2>Principle 6: separate model observability from workflow observability</h2>
-<p>LLM traces matter, but production debugging needs both planes.</p>
-<ul><li><strong>Model plane:</strong> prompt/context version, model, tokens, latency, structured-output validation, evaluator scores.</li><li><strong>Workflow plane:</strong> state transitions, tool request IDs, idempotency keys, retry counts, side-effect status, approval events and reconciliation.</li></ul>
-<p>A beautiful model trace is not enough if you cannot answer whether a downstream action actually executed.</p>
-<h2>Reference architecture</h2>
-<pre><code>Client
-  ↓
+    <p>
+     Idempotency is especially important when the caller is probabilistic because duplicate intent can arise from network retry, orchestration retry, model re-planning or human re-submission.
+    </p>
+    <h2>
+     Principle 3: classify retries by failure type
+    </h2>
+    <p>
+     &ldquo;Retry three times&rdquo; is not a strategy. Distinguish transient failures from semantic failures.
+    </p>
+    <ul>
+     <li>
+      <strong>
+       Transient infrastructure failure:
+      </strong>
+      timeout, 502, temporary capacity issue. Retry with bounded backoff.
+     </li>
+     <li>
+      <strong>
+       Rate limiting:
+      </strong>
+      respect retry-after signals and propagate pressure upstream.
+     </li>
+     <li>
+      <strong>
+       Validation failure:
+      </strong>
+      do not repeat the same invalid tool call; return structured error context for repair.
+     </li>
+     <li>
+      <strong>
+       Permission failure:
+      </strong>
+      never let a model &ldquo;reason around&rdquo; authorization.
+     </li>
+     <li>
+      <strong>
+       Unknown execution status:
+      </strong>
+      query operation state before deciding whether to replay.
+     </li>
+    </ul>
+    <h2>
+     Principle 4: make partial execution a first-class state
+    </h2>
+    <p>
+     Distributed workflows do not fail atomically. A useful orchestrator should represent states such as
+     <code>
+      tool_succeeded_review_pending
+     </code>
+     or
+     <code>
+      action_unknown_reconciliation_required
+     </code>
+     , not collapse everything into &ldquo;agent failed.&rdquo;
+    </p>
+    <p>
+     For operations that cannot be rolled back, define compensating actions. Compensation is not a true distributed transaction; it is an explicit business-level recovery path.
+    </p>
+    <h2>
+     Principle 5: use human gates at irreversible boundaries
+    </h2>
+    <p>
+     Human review is most valuable when the next action is expensive, externally visible, destructive or hard to reverse. A reviewer should see the proposed action, evidence, tool inputs and current workflow state&mdash;not just a generated paragraph.
+    </p>
+    <h2>
+     Principle 6: separate model observability from workflow observability
+    </h2>
+    <p>
+     LLM traces matter, but production debugging needs both planes.
+    </p>
+    <ul>
+     <li>
+      <strong>
+       Model plane:
+      </strong>
+      prompt/context version, model, tokens, latency, structured-output validation, evaluator scores.
+     </li>
+     <li>
+      <strong>
+       Workflow plane:
+      </strong>
+      state transitions, tool request IDs, idempotency keys, retry counts, side-effect status, approval events and reconciliation.
+     </li>
+    </ul>
+    <p>
+     A beautiful model trace is not enough if you cannot answer whether a downstream action actually executed.
+    </p>
+    <h2>
+     Reference architecture
+    </h2>
+    <pre><code>Client
+  &darr;
 API / identity
-  ↓
-Durable workflow state  ←──────────────┐
-  ↓                                     │
-Agent / planner                         │
-  ↓                                     │
-Structured action proposal              │
-  ↓                                     │
-Policy + schema validation              │
-  ↓                                     │
-Idempotent tool gateway ─→ services ────┘
-  ↓
+  &darr;
+Durable workflow state  &larr;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxh;&boxdl;
+  &darr;                                     &boxv;
+Agent / planner                         &boxv;
+  &darr;                                     &boxv;
+Structured action proposal              &boxv;
+  &darr;                                     &boxv;
+Policy + schema validation              &boxv;
+  &darr;                                     &boxv;
+Idempotent tool gateway &boxh;&rarr; services &boxh;&boxh;&boxh;&boxh;&boxul;
+  &darr;
 Human gate where required
-  ↓
+  &darr;
 Event log + reconciliation + evals</code></pre>
-<h2>Architecture review questions</h2>
-<ul><li>Who owns durable state?</li><li>Can every side-effecting tool explain whether a request already executed?</li><li>Which retries are safe, unsafe or conditional?</li><li>What happens when execution status is unknown?</li><li>Which actions are reversible?</li><li>Where can pressure propagate and create retry storms?</li><li>Can an operator recover the workflow without reconstructing the model’s internal reasoning?</li></ul>
-<blockquote>An AI agent may choose the next step. It should not be the only component that remembers whether the last step happened.</blockquote>
-<p>That distinction is what turns an impressive agent demo into a production system with understandable failure behavior.</p>
-</article><div class="article-next"><span>Continue exploring</span><a href="../blog.html">All architecture &amp; field engineering writing ↗</a></div></main><footer class="footer"><div class="container footer-grid"><div>© <span data-year=""></span> Hassan Malik · Connecticut / Boston</div><div class="footer-links"><a href="../blog.html">Writing</a><a href="../lab.html">Lab</a><a href="../experience.html">Experience</a><a href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">LinkedIn ↗</a><a href="https://github.com/hassanmalik">GitHub ↗</a></div></div></footer><script src="../assets/main.js"></script></body></html>
+    <h2>
+     Architecture review questions
+    </h2>
+    <ul>
+     <li>
+      Who owns durable state?
+     </li>
+     <li>
+      Can every side-effecting tool explain whether a request already executed?
+     </li>
+     <li>
+      Which retries are safe, unsafe or conditional?
+     </li>
+     <li>
+      What happens when execution status is unknown?
+     </li>
+     <li>
+      Which actions are reversible?
+     </li>
+     <li>
+      Where can pressure propagate and create retry storms?
+     </li>
+     <li>
+      Can an operator recover the workflow without reconstructing the model&rsquo;s internal reasoning?
+     </li>
+    </ul>
+    <blockquote>
+     An AI agent may choose the next step. It should not be the only component that remembers whether the last step happened.
+    </blockquote>
+    <p>
+     That distinction is what turns an impressive agent demo into a production system with understandable failure behavior.
+    </p>
+   </article>
+   <div class="article-next">
+    <span>
+     Continue exploring
+    </span>
+    <a href="../blog.html">
+     All architecture & field engineering writing &nearrow;
+    </a>
+   </div>
+  </main>
+  <footer class="footer">
+   <div class="container footer-grid">
+    <div>
+     &copy;
+     <span data-year>
+     </span>
+     Hassan Malik &middot; Connecticut / Boston
+    </div>
+    <div class="footer-links">
+     <a href="../blog.html">
+      Writing
+     </a>
+     <a href="../lab.html">
+      Lab
+     </a>
+     <a href="../experience.html">
+      Experience
+     </a>
+     <a href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">
+      LinkedIn &nearrow;
+     </a>
+     <a href="https://github.com/hassanmalik">
+      GitHub &nearrow;
+     </a>
+    </div>
+   </div>
+  </footer>
+  <script src="../assets/main.js">
+  </script>
+ </body>
+</html>

@@ -1,16 +1,507 @@
 <!DOCTYPE html>
-
-<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>HM / Lab | Agentic AI, RAG &amp; Distributed Systems — Hassan Malik</title><meta content="Architecture experiments by Hassan Malik across agentic AI, enterprise RAG, distributed systems, LLM evaluation, MCP-style tool boundaries, biotech software and scientific workflows." name="description"/><meta content="#101214" name="theme-color"/><link href="assets/favicon.svg" rel="icon"/><link href="assets/styles.css" rel="stylesheet"/><link href="https://hassanmalik.github.io/hassanmalikblog/lab.html" rel="canonical"/><meta content="https://hassanmalik.github.io/hassanmalikblog/lab.html" property="og:url"/><meta content="Hassan Malik" name="author"/></head><body class="lab-page">
-<header class="site-header"><nav class="nav container"><a class="brand" href="index.html"><span class="brand-mark">HM</span><span>Hassan Malik</span></a><div class="nav-links"><a href="index.html">Home</a><a href="blog.html">Writing</a><a class="active" href="lab.html">Lab</a><a href="experience.html">Experience</a><a href="about.html">About</a><a class="nav-cta" href="contact.html">Contact</a></div><a class="nav-side" href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">LinkedIn ↗</a><button aria-expanded="false" class="mobile-toggle">Menu</button></nav></header>
-<main>
-<section class="lab-hero"><div class="container"><div class="eyebrow">HM / Lab · 2026</div><div class="lab-hero-grid"><h1>Build the system.<br/><em>Expose the tradeoffs.</em></h1><div><p>The lab is where I turn architecture ideas into inspectable experiments: retrieval pipelines, evaluation loops, scientific interfaces, agents with typed tools, and the infrastructure required to make them trustworthy.</p><div class="lab-status"><span><i></i> Active notebook</span><span>6 experiments</span></div></div></div></div></section>
-<section class="lab-manifest"><div class="container"><div class="manifest-line"><span>Principle 01</span><strong>Evidence before fluency.</strong><p>Every generated answer should be traceable to the context that justified it.</p></div><div class="manifest-line"><span>Principle 02</span><strong>Tools before autonomy.</strong><p>Give models explicit, typed actions before asking them to behave like open-ended agents.</p></div><div class="manifest-line"><span>Principle 03</span><strong>Evaluation before scale.</strong><p>Measure groundedness, task success, latency and failure modes before optimizing throughput.</p></div></div></section>
-<section class="section lab-section"><div class="container"><div class="section-head"><div><div class="eyebrow">Experiments</div><h2>Working systems, not screenshots.</h2></div><p>These are design studies for the kinds of production problems I care about. Each one isolates a technical decision and makes the failure modes visible.</p></div>
-<div class="experiment-grid">
-<article class="experiment-card experiment-card-large"><div class="exp-top"><span>EXP / 001</span><span class="exp-state">architecture</span></div><h3>Evidence-first RAG for scientific review</h3><p>A retrieval architecture for scientific teams where provenance, document hierarchy and abstention matter more than conversational polish.</p><div class="mini-arch"><span>Docs</span><b>→</b><span>Parse</span><b>→</b><span>Hybrid retrieve</span><b>→</b><span>Evidence</span><b>→</b><span>LLM</span><b>→</b><span>Review</span></div><div class="exp-tags"><span>RAG</span><span>provenance</span><span>biotech</span></div></article>
-<article class="experiment-card"><div class="exp-top"><span>EXP / 002</span><span class="exp-state">evaluation</span></div><h3>Question prediction without data leakage</h3><p>An evaluation harness for predicting regulator-style questions while separating historical question banks from held-out validation data.</p><div class="score-stack"><span><i style="--v:82%"></i>Coverage</span><span><i style="--v:71%"></i>Novelty</span><span><i style="--v:91%"></i>Grounding</span></div><div class="exp-tags"><span>evals</span><span>retrieval</span></div></article>
-<article class="experiment-card"><div class="exp-top"><span>EXP / 003</span><span class="exp-state">agents</span></div><h3>Typed-tool agent boundary</h3><p>A narrow agent pattern where models can read evidence, call approved tools, propose actions and stop at a human approval gate.</p><div class="agent-loop"><span>Observe</span><span>Reason</span><span>Tool</span><span>Review</span></div><div class="exp-tags"><span>agents</span><span>tool use</span><span>human-in-loop</span></div></article>
-<article class="experiment-card experiment-card-wide"><div class="exp-top"><span>EXP / 004</span><span class="exp-state">interface</span></div><div class="exp-wide-grid"><div><h3>Scientific workflow UX</h3><p>What changes when an AI interface is designed around evidence inspection, experimental context and decisions—not chat.</p><div class="exp-tags"><span>UX</span><span>scientific software</span><span>decision systems</span></div></div><div class="workflow-ui"><div class="wf-row"><b>01</b><span>Input evidence</span><em>12 sources</em></div><div class="wf-row active"><b>02</b><span>Model synthesis</span><em>3 claims flagged</em></div><div class="wf-row"><b>03</b><span>Human review</span><em>required</em></div><div class="wf-row"><b>04</b><span>Action</span><em>locked</em></div></div></div></article>
-<article class="experiment-card"><div class="exp-top"><span>EXP / 005</span><span class="exp-state">distributed systems</span></div><h3>Durable state for agentic workflows</h3><p>A reference pattern for retries, idempotency, partial failure, tool execution and human escalation when probabilistic planners call deterministic services.</p><div class="agent-loop"><span>Plan</span><span>Validate</span><span>Execute</span><span>Persist</span></div><div class="exp-tags"><span>agentic AI</span><span>distributed systems</span><span>idempotency</span></div></article><article class="experiment-card"><div class="exp-top"><span>EXP / 006</span><span class="exp-state">security</span></div><h3>Authorization-preserving retrieval</h3><p>An enterprise RAG boundary where source-system permissions participate in retrieval before evidence reaches the model context or tool layer.</p><div class="mini-arch"><span>Identity</span><b>→</b><span>Policy</span><b>→</b><span>Retrieve</span><b>→</b><span>Evidence</span></div><div class="exp-tags"><span>enterprise RAG</span><span>authorization</span><span>MCP tools</span></div></article></div></div></section>
-<section class="lab-bottom"><div class="container lab-bottom-grid"><div><div class="eyebrow">What I’m testing next</div><h2>Small models, strong systems.</h2></div><p>How far can a compact model go when retrieval, tool interfaces, domain context, caching and evaluation are engineered properly? That question is more interesting to me than simply moving to a larger model.</p></div></section>
-</main><footer class="footer footer-dark"><div class="container footer-grid"><div>© <span data-year=""></span> Hassan Malik · HM/Lab</div><div class="footer-links"><a href="blog.html">Writing</a><a href="experience.html">Experience</a><a href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">LinkedIn ↗</a><a href="https://github.com/hassanmalik">GitHub ↗</a></div></div></footer><script src="assets/main.js"></script></body></html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width,initial-scale=1" name="viewport">
+  <title>
+   HM / Lab | Agentic AI, RAG & Distributed Systems &mdash; Hassan Malik
+  </title>
+  <meta content="Architecture experiments by Hassan Malik across agentic AI, enterprise RAG, distributed systems, LLM evaluation, MCP-style tool boundaries, biotech software and scientific workflows." name="description">
+  <meta content="#101214" name="theme-color">
+  <link href="assets/favicon.svg" rel="icon">
+  <link href="assets/styles.css" rel="stylesheet">
+  <link href="https://hassanmalik.github.io/hassanmalikblog/lab.html" rel="canonical">
+  <meta content="https://hassanmalik.github.io/hassanmalikblog/lab.html" property="og:url">
+  <meta content="Hassan Malik" name="author">
+  <meta content="HM / Lab | Agentic AI, RAG & Distributed Systems &mdash; Hassan Malik" property="og:title">
+  <meta content="Architecture experiments by Hassan Malik across agentic AI, enterprise RAG, distributed systems, LLM evaluation, MCP-style tool boundaries, biotech software and scientific workflows." property="og:description">
+  <script type="application/ld+json">
+   {"@context":"https://schema.org","@type":"WebPage","name":"HM / Lab | Agentic AI, RAG & Distributed Systems \u2014 Hassan Malik","description":"Architecture experiments by Hassan Malik across agentic AI, enterprise RAG, distributed systems, LLM evaluation, MCP-style tool boundaries, biotech software and scientific workflows.","url":"https://hassanmalik.github.io/hassanmalikblog/lab.html"}
+  </script>
+ </head>
+ <body class="lab-page">
+  <a class="skip-link" href="#main-content">
+   Skip to content
+  </a>
+  <header class="site-header">
+   <nav class="nav container">
+    <a class="brand" href="index.html">
+     <span class="brand-mark">
+      HM
+     </span>
+     <span>
+      Hassan Malik
+     </span>
+    </a>
+    <div class="nav-links">
+     <a href="index.html">
+      Home
+     </a>
+     <a href="blog.html">
+      Writing
+     </a>
+     <a class="active" href="lab.html">
+      Lab
+     </a>
+     <a href="experience.html">
+      Experience
+     </a>
+     <a href="about.html">
+      About
+     </a>
+     <a class="nav-cta" href="contact.html">
+      Contact
+     </a>
+    </div>
+    <a class="nav-side" href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">
+     LinkedIn &nearrow;
+    </a>
+    <button aria-expanded="false" aria-label="Toggle navigation" class="mobile-toggle">
+     Menu
+    </button>
+   </nav>
+  </header>
+  <main id="main-content">
+   <section class="lab-hero">
+    <div class="container">
+     <div class="eyebrow">
+      HM / Lab &middot; 2026
+     </div>
+     <div class="lab-hero-grid">
+      <h1>
+       Build the system.
+       <br>
+       <em>
+        Expose the tradeoffs.
+       </em>
+      </h1>
+      <div>
+       <p>
+        The lab is where I turn architecture ideas into inspectable experiments: retrieval pipelines, evaluation loops, scientific interfaces, agents with typed tools, and the infrastructure required to make them trustworthy.
+       </p>
+       <div class="lab-status">
+        <span>
+         <i>
+         </i>
+         Active notebook
+        </span>
+        <span>
+         6 experiments
+        </span>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section>
+   <section class="lab-manifest">
+    <div class="container">
+     <div class="manifest-line">
+      <span>
+       Principle 01
+      </span>
+      <strong>
+       Evidence before fluency.
+      </strong>
+      <p>
+       Every generated answer should be traceable to the context that justified it.
+      </p>
+     </div>
+     <div class="manifest-line">
+      <span>
+       Principle 02
+      </span>
+      <strong>
+       Tools before autonomy.
+      </strong>
+      <p>
+       Give models explicit, typed actions before asking them to behave like open-ended agents.
+      </p>
+     </div>
+     <div class="manifest-line">
+      <span>
+       Principle 03
+      </span>
+      <strong>
+       Evaluation before scale.
+      </strong>
+      <p>
+       Measure groundedness, task success, latency and failure modes before optimizing throughput.
+      </p>
+     </div>
+    </div>
+   </section>
+   <section class="section lab-section">
+    <div class="container">
+     <div class="section-head">
+      <div>
+       <div class="eyebrow">
+        Experiments
+       </div>
+       <h2>
+        Working systems, not screenshots.
+       </h2>
+      </div>
+      <p>
+       These are design studies for the kinds of production problems I care about. Each one isolates a technical decision and makes the failure modes visible.
+      </p>
+     </div>
+     <div class="experiment-grid">
+      <article class="experiment-card experiment-card-large">
+       <div class="exp-top">
+        <span>
+         EXP / 001
+        </span>
+        <span class="exp-state">
+         architecture
+        </span>
+       </div>
+       <h3>
+        Evidence-first RAG for scientific review
+       </h3>
+       <p>
+        A retrieval architecture for scientific teams where provenance, document hierarchy and abstention matter more than conversational polish.
+       </p>
+       <div class="mini-arch">
+        <span>
+         Docs
+        </span>
+        <b>
+         &rarr;
+        </b>
+        <span>
+         Parse
+        </span>
+        <b>
+         &rarr;
+        </b>
+        <span>
+         Hybrid retrieve
+        </span>
+        <b>
+         &rarr;
+        </b>
+        <span>
+         Evidence
+        </span>
+        <b>
+         &rarr;
+        </b>
+        <span>
+         LLM
+        </span>
+        <b>
+         &rarr;
+        </b>
+        <span>
+         Review
+        </span>
+       </div>
+       <div class="exp-tags">
+        <span>
+         RAG
+        </span>
+        <span>
+         provenance
+        </span>
+        <span>
+         biotech
+        </span>
+       </div>
+      </article>
+      <article class="experiment-card">
+       <div class="exp-top">
+        <span>
+         EXP / 002
+        </span>
+        <span class="exp-state">
+         evaluation
+        </span>
+       </div>
+       <h3>
+        Question prediction without data leakage
+       </h3>
+       <p>
+        An evaluation harness for predicting regulator-style questions while separating historical question banks from held-out validation data.
+       </p>
+       <div class="score-stack">
+        <span>
+         <i style="--v:82%">
+         </i>
+         Coverage
+        </span>
+        <span>
+         <i style="--v:71%">
+         </i>
+         Novelty
+        </span>
+        <span>
+         <i style="--v:91%">
+         </i>
+         Grounding
+        </span>
+       </div>
+       <div class="exp-tags">
+        <span>
+         evals
+        </span>
+        <span>
+         retrieval
+        </span>
+       </div>
+      </article>
+      <article class="experiment-card">
+       <div class="exp-top">
+        <span>
+         EXP / 003
+        </span>
+        <span class="exp-state">
+         agents
+        </span>
+       </div>
+       <h3>
+        Typed-tool agent boundary
+       </h3>
+       <p>
+        A narrow agent pattern where models can read evidence, call approved tools, propose actions and stop at a human approval gate.
+       </p>
+       <div class="agent-loop">
+        <span>
+         Observe
+        </span>
+        <span>
+         Reason
+        </span>
+        <span>
+         Tool
+        </span>
+        <span>
+         Review
+        </span>
+       </div>
+       <div class="exp-tags">
+        <span>
+         agents
+        </span>
+        <span>
+         tool use
+        </span>
+        <span>
+         human-in-loop
+        </span>
+       </div>
+      </article>
+      <article class="experiment-card experiment-card-wide">
+       <div class="exp-top">
+        <span>
+         EXP / 004
+        </span>
+        <span class="exp-state">
+         interface
+        </span>
+       </div>
+       <div class="exp-wide-grid">
+        <div>
+         <h3>
+          Scientific workflow UX
+         </h3>
+         <p>
+          What changes when an AI interface is designed around evidence inspection, experimental context and decisions&mdash;not chat.
+         </p>
+         <div class="exp-tags">
+          <span>
+           UX
+          </span>
+          <span>
+           scientific software
+          </span>
+          <span>
+           decision systems
+          </span>
+         </div>
+        </div>
+        <div class="workflow-ui">
+         <div class="wf-row">
+          <b>
+           01
+          </b>
+          <span>
+           Input evidence
+          </span>
+          <em>
+           12 sources
+          </em>
+         </div>
+         <div class="wf-row active">
+          <b>
+           02
+          </b>
+          <span>
+           Model synthesis
+          </span>
+          <em>
+           3 claims flagged
+          </em>
+         </div>
+         <div class="wf-row">
+          <b>
+           03
+          </b>
+          <span>
+           Human review
+          </span>
+          <em>
+           required
+          </em>
+         </div>
+         <div class="wf-row">
+          <b>
+           04
+          </b>
+          <span>
+           Action
+          </span>
+          <em>
+           locked
+          </em>
+         </div>
+        </div>
+       </div>
+      </article>
+      <article class="experiment-card">
+       <div class="exp-top">
+        <span>
+         EXP / 005
+        </span>
+        <span class="exp-state">
+         distributed systems
+        </span>
+       </div>
+       <h3>
+        Durable state for agentic workflows
+       </h3>
+       <p>
+        A reference pattern for retries, idempotency, partial failure, tool execution and human escalation when probabilistic planners call deterministic services.
+       </p>
+       <div class="agent-loop">
+        <span>
+         Plan
+        </span>
+        <span>
+         Validate
+        </span>
+        <span>
+         Execute
+        </span>
+        <span>
+         Persist
+        </span>
+       </div>
+       <div class="exp-tags">
+        <span>
+         agentic AI
+        </span>
+        <span>
+         distributed systems
+        </span>
+        <span>
+         idempotency
+        </span>
+       </div>
+      </article>
+      <article class="experiment-card">
+       <div class="exp-top">
+        <span>
+         EXP / 006
+        </span>
+        <span class="exp-state">
+         security
+        </span>
+       </div>
+       <h3>
+        Authorization-preserving retrieval
+       </h3>
+       <p>
+        An enterprise RAG boundary where source-system permissions participate in retrieval before evidence reaches the model context or tool layer.
+       </p>
+       <div class="mini-arch">
+        <span>
+         Identity
+        </span>
+        <b>
+         &rarr;
+        </b>
+        <span>
+         Policy
+        </span>
+        <b>
+         &rarr;
+        </b>
+        <span>
+         Retrieve
+        </span>
+        <b>
+         &rarr;
+        </b>
+        <span>
+         Evidence
+        </span>
+       </div>
+       <div class="exp-tags">
+        <span>
+         enterprise RAG
+        </span>
+        <span>
+         authorization
+        </span>
+        <span>
+         MCP tools
+        </span>
+       </div>
+      </article>
+     </div>
+    </div>
+   </section>
+   <section class="lab-bottom">
+    <div class="container lab-bottom-grid">
+     <div>
+      <div class="eyebrow">
+       What I&rsquo;m testing next
+      </div>
+      <h2>
+       Small models, strong systems.
+      </h2>
+     </div>
+     <p>
+      How far can a compact model go when retrieval, tool interfaces, domain context, caching and evaluation are engineered properly? That question is more interesting to me than simply moving to a larger model.
+     </p>
+    </div>
+   </section>
+  </main>
+  <footer class="footer footer-dark">
+   <div class="container footer-grid">
+    <div>
+     &copy;
+     <span data-year>
+     </span>
+     Hassan Malik &middot; HM/Lab
+    </div>
+    <div class="footer-links">
+     <a href="blog.html">
+      Writing
+     </a>
+     <a href="experience.html">
+      Experience
+     </a>
+     <a href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">
+      LinkedIn &nearrow;
+     </a>
+     <a href="https://github.com/hassanmalik">
+      GitHub &nearrow;
+     </a>
+    </div>
+   </div>
+  </footer>
+  <script src="assets/main.js">
+  </script>
+ </body>
+</html>

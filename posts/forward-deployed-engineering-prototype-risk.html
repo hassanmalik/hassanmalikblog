@@ -1,49 +1,332 @@
 <!DOCTYPE html>
-
-<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Forward Deployed Engineering: Prototype the Risk, Not the AI Demo — Hassan Malik</title><meta content="An FDE playbook for customer discovery, architecture scoping, risk-first prototyping, evaluation, production deployment and turning field work into reusable platform capabilities." name="description"/><meta content="#f3f0e9" name="theme-color"/><link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/><link href="../assets/styles.css" rel="stylesheet"/><link href="https://hassanmalik.github.io/hassanmalikblog/posts/forward-deployed-engineering-prototype-risk.html" rel="canonical"/><meta content="Forward Deployed Engineering: Prototype the Risk, Not the AI Demo" property="og:title"/><meta content="An FDE playbook for customer discovery, architecture scoping, risk-first prototyping, evaluation, production deployment and turning field work into reusable platform capabilities." property="og:description"/><meta content="article" property="og:type"/><meta content="https://hassanmalik.github.io/hassanmalikblog/posts/forward-deployed-engineering-prototype-risk.html" property="og:url"/><meta content="2026-08-22" property="article:published_time"/><meta content="2026-08-22" property="article:modified_time"/><meta content="Hassan Malik" name="author"/><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Forward Deployed Engineering: Prototype the Risk, Not the AI Demo","description":"An FDE playbook for customer discovery, architecture scoping, risk-first prototyping, evaluation, production deployment and turning field work into reusable platform capabilities.","author":{"@type":"Person","name":"Hassan Malik","url":"https://hassanmalik.github.io/hassanmalikblog/","sameAs":["https://www.linkedin.com/in/malik-msee/","https://github.com/hassanmalik"]},"datePublished":"2026-08-22","dateModified":"2026-08-22","mainEntityOfPage":"https://hassanmalik.github.io/hassanmalikblog/posts/forward-deployed-engineering-prototype-risk.html","keywords":["Forward Deployed Engineering","FDE","customer discovery","technical scoping","AI deployment","rapid prototyping","AI platform engineering"],"publisher":{"@type":"Person","name":"Hassan Malik","sameAs":["https://www.linkedin.com/in/malik-msee/","https://github.com/hassanmalik"]}}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://hassanmalik.github.io/hassanmalikblog/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://hassanmalik.github.io/hassanmalikblog/blog.html"},{"@type":"ListItem","position":3,"name":"Forward Deployed Engineering: Prototype the Risk, Not the AI Demo","item":"https://hassanmalik.github.io/hassanmalikblog/posts/forward-deployed-engineering-prototype-risk.html"}]}</script></head><body><header class="site-header"><nav aria-label="Primary navigation" class="nav container"><a class="brand" href="../index.html"><span class="brand-mark">HM</span><span>Hassan Malik</span></a><div class="nav-links"><a class="" href="../index.html">Home</a><a class="active" href="../blog.html">Writing</a><a class="" href="../lab.html">Lab</a><a class="" href="../experience.html">Experience</a><a class="" href="../about.html">About</a><a class="nav-cta" href="../contact.html">Contact</a></div><a class="nav-side" href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">LinkedIn ↗</a><button aria-expanded="false" aria-label="Toggle navigation" class="mobile-toggle">Menu</button></nav></header><main class="article-shell"><div class="eyebrow">Forward Deployed Engineering · FDE playbook</div><h1>Forward Deployed Engineering: Prototype the Risk, Not the AI Demo</h1><p class="article-dek">The purpose of an FDE prototype is not to impress the room. It is to eliminate the uncertainty most likely to kill the deployment.</p><div class="article-meta"><a class="article-author" href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">Hassan Malik ↗</a> · 10 min read · Published 2026-08-22</div><div class="article-context">Independent reference architecture. No employer-confidential systems or data.</div><article class="prose">
-<p>A polished AI demo can prove that a model is capable of producing an answer. A strong Forward Deployed Engineering prototype proves that the customer’s riskiest assumption is survivable.</p>
-<p>Those are very different objectives.</p>
-<h2>Start with the expensive decision</h2>
-<p>Before choosing a model or framework, map the customer workflow using eight questions:</p>
-<ol><li><strong>User:</strong> who actually performs the work?</li><li><strong>Decision:</strong> what decision are they trying to make?</li><li><strong>Evidence:</strong> what information supports the decision?</li><li><strong>Workflow:</strong> what happens immediately before and after?</li><li><strong>Friction:</strong> where does time, ambiguity or rework accumulate?</li><li><strong>Risk:</strong> what happens if the system is wrong?</li><li><strong>System:</strong> what should be probabilistic vs. deterministic?</li><li><strong>Evaluation:</strong> what evidence would convince the customer that the deployment is useful?</li></ol>
-<p>This discovery sequence prevents a common failure mode: the customer asks for “an agent,” the team prototypes an agent, and weeks later everyone discovers that the real constraint was permission-aware retrieval, data freshness or an approval workflow.</p>
-<h2>Build a risk register before a feature list</h2>
-<p>For an enterprise AI deployment, I would explicitly rank uncertainties such as:</p>
-<ul><li>Can we access the real data under production permission boundaries?</li><li>Can retrieval find the evidence required for the actual decision?</li><li>Can the system distinguish insufficient evidence from low-confidence generation?</li><li>Can tool actions be executed safely and recovered after partial failure?</li><li>Can quality be evaluated without leaking future answers into the benchmark?</li><li>Will latency be acceptable at the customer’s real corpus and concurrency?</li><li>Can a user understand why the system made a recommendation?</li></ul>
-<p>The first prototype should attack the highest combination of uncertainty and business consequence.</p>
-<h2>Prototype a vertical slice, not a toy</h2>
-<p>A useful FDE prototype is deliberately narrow but end-to-end:</p>
-<pre><code>real user
-→ real identity
-→ representative data
-→ retrieval / business logic
-→ model reasoning
-→ actual tool boundary
-→ review / action
-→ telemetry</code></pre>
-<p>The feature set can be tiny. The architecture path should be real enough to expose integration risk.</p>
-<h2>Example: scientific question answering</h2>
-<p>Suppose the request is “build a copilot that answers scientific questions from internal reports.” A weak demo optimizes the chat UI. A risk-first prototype might instead focus on three questions:</p>
-<ul><li>Does permission-aware retrieval return the correct evidence?</li><li>Can generated claims be traced to exact source passages and versions?</li><li>Can reviewers identify unsupported synthesis quickly?</li></ul>
-<p>If those fail, a prettier interface will not save the project.</p>
-<h2>Use a 48-hour architecture loop</h2>
-<p>For a time-boxed engagement, I like a compact loop:</p>
-<pre><code>Discover → frame the decision
-Map      → data, systems, permissions, actors
-Rank     → technical and adoption risks
-Slice    → one end-to-end workflow
-Measure  → task quality + system behavior
-Review   → architecture tradeoffs
-Decide   → deepen, pivot or stop</code></pre>
-<p>The output is not just a prototype. It is a better model of the problem.</p>
-<h2>Know when customer-specific work should become product</h2>
-<p>Forward deployment creates a broader platform question: when is a customer requirement evidence of a reusable platform primitive?</p>
-<p>I would look for repeated <em>constraints</em>, not repeated feature requests. If three customers all ask for different interfaces but share the need for permission-aware retrieval and claim-level provenance, the stable primitive may be the evidence service—not a configurable version of each customer’s UI.</p>
-<p>Generalize too early and the platform becomes an abstraction tax. Generalize too late and every deployment becomes a fork.</p>
-<h2>Define stop criteria</h2>
-<p>A mature field engagement should be willing to conclude that the current approach is wrong. Stop or pivot when a critical assumption fails repeatedly, when the workflow does not create enough value to justify integration cost, or when the requested behavior would require unsafe or unmaintainable architecture.</p>
-<blockquote>The fastest prototype is not the one with the fewest lines of code. It is the one that removes the most uncertainty per day.</blockquote>
-<h2>What the best FDE work leaves behind</h2>
-<p>A strong engagement produces four assets: a working vertical slice, an evidence-based architecture decision, an evaluation baseline, and a clear boundary between reusable platform capability and customer-specific integration.</p>
-<p>That is why I think of Forward Deployed Engineering as systems engineering under customer pressure—not simply implementation at the edge.</p>
-</article><div class="article-next"><span>Continue exploring</span><a href="../blog.html">All architecture &amp; field engineering writing ↗</a></div></main><footer class="footer"><div class="container footer-grid"><div>© <span data-year=""></span> Hassan Malik · Connecticut / Boston</div><div class="footer-links"><a href="../blog.html">Writing</a><a href="../lab.html">Lab</a><a href="../experience.html">Experience</a><a href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">LinkedIn ↗</a><a href="https://github.com/hassanmalik">GitHub ↗</a></div></div></footer><script src="../assets/main.js"></script></body></html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width,initial-scale=1" name="viewport">
+  <title>
+   Forward Deployed Engineering: Prototype the Risk, Not the AI Demo &mdash; Hassan Malik
+  </title>
+  <meta content="An FDE playbook for customer discovery, architecture scoping, risk-first prototyping, evaluation, production deployment and turning field work into reusable platform capabilities." name="description">
+  <meta content="#f3f0e9" name="theme-color">
+  <link href="../assets/favicon.svg" rel="icon" type="image/svg+xml">
+  <link href="../assets/styles.css" rel="stylesheet">
+  <link href="https://hassanmalik.github.io/hassanmalikblog/posts/forward-deployed-engineering-prototype-risk.html" rel="canonical">
+  <meta content="Forward Deployed Engineering: Prototype the Risk, Not the AI Demo &mdash; Hassan Malik" property="og:title">
+  <meta content="An FDE playbook for customer discovery, architecture scoping, risk-first prototyping, evaluation, production deployment and turning field work into reusable platform capabilities." property="og:description">
+  <meta content="article" property="og:type">
+  <meta content="https://hassanmalik.github.io/hassanmalikblog/posts/forward-deployed-engineering-prototype-risk.html" property="og:url">
+  <meta content="2026-08-22" property="article:published_time">
+  <meta content="2026-08-22" property="article:modified_time">
+  <meta content="Hassan Malik" name="author">
+  <script type="application/ld+json">
+   {"@context":"https://schema.org","@type":"BlogPosting","headline":"Forward Deployed Engineering: Prototype the Risk, Not the AI Demo","description":"An FDE playbook for customer discovery, architecture scoping, risk-first prototyping, evaluation, production deployment and turning field work into reusable platform capabilities.","author":{"@type":"Person","name":"Hassan Malik","url":"https://hassanmalik.github.io/hassanmalikblog/","sameAs":["https://www.linkedin.com/in/malik-msee/","https://github.com/hassanmalik"]},"datePublished":"2026-08-22","dateModified":"2026-08-22","mainEntityOfPage":"https://hassanmalik.github.io/hassanmalikblog/posts/forward-deployed-engineering-prototype-risk.html","keywords":["Forward Deployed Engineering","FDE","customer discovery","technical scoping","AI deployment","rapid prototyping","AI platform engineering"],"publisher":{"@type":"Person","name":"Hassan Malik","sameAs":["https://www.linkedin.com/in/malik-msee/","https://github.com/hassanmalik"]}}
+  </script>
+  <script type="application/ld+json">
+   {"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://hassanmalik.github.io/hassanmalikblog/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://hassanmalik.github.io/hassanmalikblog/blog.html"},{"@type":"ListItem","position":3,"name":"Forward Deployed Engineering: Prototype the Risk, Not the AI Demo","item":"https://hassanmalik.github.io/hassanmalikblog/posts/forward-deployed-engineering-prototype-risk.html"}]}
+  </script>
+ </head>
+ <body>
+  <a class="skip-link" href="#main-content">
+   Skip to content
+  </a>
+  <header class="site-header">
+   <nav aria-label="Primary navigation" class="nav container">
+    <a class="brand" href="../index.html">
+     <span class="brand-mark">
+      HM
+     </span>
+     <span>
+      Hassan Malik
+     </span>
+    </a>
+    <div class="nav-links">
+     <a class="" href="../index.html">
+      Home
+     </a>
+     <a class="active" href="../blog.html">
+      Writing
+     </a>
+     <a class="" href="../lab.html">
+      Lab
+     </a>
+     <a class="" href="../experience.html">
+      Experience
+     </a>
+     <a class="" href="../about.html">
+      About
+     </a>
+     <a class="nav-cta" href="../contact.html">
+      Contact
+     </a>
+    </div>
+    <a class="nav-side" href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">
+     LinkedIn &nearrow;
+    </a>
+    <button aria-expanded="false" aria-label="Toggle navigation" class="mobile-toggle">
+     Menu
+    </button>
+   </nav>
+  </header>
+  <main class="article-shell" id="main-content">
+   <div class="eyebrow">
+    Forward Deployed Engineering &middot; FDE playbook
+   </div>
+   <h1>
+    Forward Deployed Engineering: Prototype the Risk, Not the AI Demo
+   </h1>
+   <p class="article-dek">
+    The purpose of an FDE prototype is not to impress the room. It is to eliminate the uncertainty most likely to kill the deployment.
+   </p>
+   <div class="article-meta">
+    <a class="article-author" href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">
+     Hassan Malik &nearrow;
+    </a>
+    &middot; 10 min read &middot; Published 2026-08-22
+   </div>
+   <div class="article-context">
+    Independent reference architecture. No employer-confidential systems or data.
+   </div>
+   <article class="prose" data-archetype="Build" data-article-type="Original Essay" data-pillar="Forward-Deployed Engineering">
+    <div class="article-context">
+     Original Essay &middot; Forward-Deployed Engineering &times; Build &middot;
+     <span class="topic-tag">
+      Customer Discovery
+     </span>
+     &middot;
+     <span class="topic-tag">
+      Prototyping
+     </span>
+     &middot;
+     <span class="topic-tag">
+      Productization
+     </span>
+     &middot;
+     <span class="topic-tag">
+      AI Deployment
+     </span>
+    </div>
+    <p>
+     A polished AI demo can prove that a model is capable of producing an answer. A strong Forward Deployed Engineering prototype proves that the customer&rsquo;s riskiest assumption is survivable.
+    </p>
+    <p>
+     Those are very different objectives.
+    </p>
+    <h2>
+     Start with the expensive decision
+    </h2>
+    <p>
+     Before choosing a model or framework, map the customer workflow using eight questions:
+    </p>
+    <ol>
+     <li>
+      <strong>
+       User:
+      </strong>
+      who actually performs the work?
+     </li>
+     <li>
+      <strong>
+       Decision:
+      </strong>
+      what decision are they trying to make?
+     </li>
+     <li>
+      <strong>
+       Evidence:
+      </strong>
+      what information supports the decision?
+     </li>
+     <li>
+      <strong>
+       Workflow:
+      </strong>
+      what happens immediately before and after?
+     </li>
+     <li>
+      <strong>
+       Friction:
+      </strong>
+      where does time, ambiguity or rework accumulate?
+     </li>
+     <li>
+      <strong>
+       Risk:
+      </strong>
+      what happens if the system is wrong?
+     </li>
+     <li>
+      <strong>
+       System:
+      </strong>
+      what should be probabilistic vs. deterministic?
+     </li>
+     <li>
+      <strong>
+       Evaluation:
+      </strong>
+      what evidence would convince the customer that the deployment is useful?
+     </li>
+    </ol>
+    <p>
+     This discovery sequence prevents a common failure mode: the customer asks for &ldquo;an agent,&rdquo; the team prototypes an agent, and weeks later everyone discovers that the real constraint was permission-aware retrieval, data freshness or an approval workflow.
+    </p>
+    <h2>
+     Build a risk register before a feature list
+    </h2>
+    <p>
+     For an enterprise AI deployment, I would explicitly rank uncertainties such as:
+    </p>
+    <ul>
+     <li>
+      Can we access the real data under production permission boundaries?
+     </li>
+     <li>
+      Can retrieval find the evidence required for the actual decision?
+     </li>
+     <li>
+      Can the system distinguish insufficient evidence from low-confidence generation?
+     </li>
+     <li>
+      Can tool actions be executed safely and recovered after partial failure?
+     </li>
+     <li>
+      Can quality be evaluated without leaking future answers into the benchmark?
+     </li>
+     <li>
+      Will latency be acceptable at the customer&rsquo;s real corpus and concurrency?
+     </li>
+     <li>
+      Can a user understand why the system made a recommendation?
+     </li>
+    </ul>
+    <p>
+     The first prototype should attack the highest combination of uncertainty and business consequence.
+    </p>
+    <h2>
+     Prototype a vertical slice, not a toy
+    </h2>
+    <p>
+     A useful FDE prototype is deliberately narrow but end-to-end:
+    </p>
+    <pre><code>real user
+&rarr; real identity
+&rarr; representative data
+&rarr; retrieval / business logic
+&rarr; model reasoning
+&rarr; actual tool boundary
+&rarr; review / action
+&rarr; telemetry</code></pre>
+    <p>
+     The feature set can be tiny. The architecture path should be real enough to expose integration risk.
+    </p>
+    <h2>
+     Example: scientific question answering
+    </h2>
+    <p>
+     Suppose the request is &ldquo;build a copilot that answers scientific questions from internal reports.&rdquo; A weak demo optimizes the chat UI. A risk-first prototype might instead focus on three questions:
+    </p>
+    <ul>
+     <li>
+      Does permission-aware retrieval return the correct evidence?
+     </li>
+     <li>
+      Can generated claims be traced to exact source passages and versions?
+     </li>
+     <li>
+      Can reviewers identify unsupported synthesis quickly?
+     </li>
+    </ul>
+    <p>
+     If those fail, a prettier interface will not save the project.
+    </p>
+    <h2>
+     Use a 48-hour architecture loop
+    </h2>
+    <p>
+     For a time-boxed engagement, I like a compact loop:
+    </p>
+    <pre><code>Discover &rarr; frame the decision
+Map      &rarr; data, systems, permissions, actors
+Rank     &rarr; technical and adoption risks
+Slice    &rarr; one end-to-end workflow
+Measure  &rarr; task quality + system behavior
+Review   &rarr; architecture tradeoffs
+Decide   &rarr; deepen, pivot or stop</code></pre>
+    <p>
+     The output is not just a prototype. It is a better model of the problem.
+    </p>
+    <h2>
+     Know when customer-specific work should become product
+    </h2>
+    <p>
+     Forward deployment creates a broader platform question: when is a customer requirement evidence of a reusable platform primitive?
+    </p>
+    <p>
+     I would look for repeated
+     <em>
+      constraints
+     </em>
+     , not repeated feature requests. If three customers all ask for different interfaces but share the need for permission-aware retrieval and claim-level provenance, the stable primitive may be the evidence service&mdash;not a configurable version of each customer&rsquo;s UI.
+    </p>
+    <p>
+     Generalize too early and the platform becomes an abstraction tax. Generalize too late and every deployment becomes a fork.
+    </p>
+    <h2>
+     Define stop criteria
+    </h2>
+    <p>
+     A mature field engagement should be willing to conclude that the current approach is wrong. Stop or pivot when a critical assumption fails repeatedly, when the workflow does not create enough value to justify integration cost, or when the requested behavior would require unsafe or unmaintainable architecture.
+    </p>
+    <blockquote>
+     The fastest prototype is not the one with the fewest lines of code. It is the one that removes the most uncertainty per day.
+    </blockquote>
+    <h2>
+     What the best FDE work leaves behind
+    </h2>
+    <p>
+     A strong engagement produces four assets: a working vertical slice, an evidence-based architecture decision, an evaluation baseline, and a clear boundary between reusable platform capability and customer-specific integration.
+    </p>
+    <p>
+     That is why I think of Forward Deployed Engineering as systems engineering under customer pressure&mdash;not simply implementation at the edge.
+    </p>
+   </article>
+   <div class="article-next">
+    <span>
+     Continue exploring
+    </span>
+    <a href="../blog.html">
+     All architecture & field engineering writing &nearrow;
+    </a>
+   </div>
+  </main>
+  <footer class="footer">
+   <div class="container footer-grid">
+    <div>
+     &copy;
+     <span data-year>
+     </span>
+     Hassan Malik &middot; Connecticut / Boston
+    </div>
+    <div class="footer-links">
+     <a href="../blog.html">
+      Writing
+     </a>
+     <a href="../lab.html">
+      Lab
+     </a>
+     <a href="../experience.html">
+      Experience
+     </a>
+     <a href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">
+      LinkedIn &nearrow;
+     </a>
+     <a href="https://github.com/hassanmalik">
+      GitHub &nearrow;
+     </a>
+    </div>
+   </div>
+  </footer>
+  <script src="../assets/main.js">
+  </script>
+ </body>
+</html>

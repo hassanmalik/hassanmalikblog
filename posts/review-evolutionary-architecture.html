@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width,initial-scale=1" name="viewport">
+  <title>
+   Evolutionary Architecture: Designing for Change Without Abandoning Direction &mdash; Hassan Malik
+  </title>
+  <meta content="An independent review of Martin Fowler's evolutionary architecture framing, focused on feedback loops, constraints, tradeoffs, and architecture fitness." name="description">
+  <link href="../assets/favicon.svg" rel="icon" type="image/svg+xml">
+  <link href="../assets/styles.css" rel="stylesheet">
+  <link href="https://hassanmalik.github.io/hassanmalikblog/posts/review-evolutionary-architecture.html" rel="canonical">
+  <meta content="Evolutionary Architecture: Designing for Change Without Abandoning Direction &mdash; Hassan Malik" property="og:title">
+  <meta content="An independent review of Martin Fowler's evolutionary architecture framing, focused on feedback loops, constraints, tradeoffs, and architecture fitness." property="og:description">
+  <meta content="article" property="og:type">
+  <meta content="https://hassanmalik.github.io/hassanmalikblog/posts/review-evolutionary-architecture.html" property="og:url">
+  <script type="application/ld+json">
+   {"@context":"https://schema.org","@type":"Article","headline":"Evolutionary Architecture: Designing for Change Without Abandoning Direction","author":{"@type":"Person","name":"Hassan Malik"},"datePublished":"2026-08-23","isBasedOn":"https://martinfowler.com/articles/evo-arch-forward.html","mainEntityOfPage":"https://hassanmalik.github.io/hassanmalikblog/posts/review-evolutionary-architecture.html"}
+  </script>
+ </head>
+ <body>
+  <a class="skip-link" href="#main-content">
+   Skip to content
+  </a>
+  <header class="site-header">
+   <nav aria-label="Primary navigation" class="nav container">
+    <a class="brand" href="../index.html">
+     <span class="brand-mark">
+      HM
+     </span>
+     <span>
+      Hassan Malik
+     </span>
+    </a>
+    <div class="nav-links">
+     <a href="../index.html">
+      Home
+     </a>
+     <a aria-current="page" class="active" href="../blog.html">
+      Writing
+     </a>
+     <a href="../lab.html">
+      Lab
+     </a>
+     <a href="../about.html">
+      About
+     </a>
+     <a class="nav-cta" href="../contact.html">
+      Contact
+     </a>
+    </div>
+    <button aria-expanded="false" aria-label="Toggle navigation" class="mobile-toggle">
+     Menu
+    </button>
+   </nav>
+  </header>
+  <main class="article-shell" id="main-content">
+   <div class="eyebrow">
+    Publication review &middot; Martin Fowler
+   </div>
+   <h1>
+    Evolutionary Architecture: Designing for Change Without Abandoning Direction
+   </h1>
+   <p class="article-dek">
+    Evolutionary architecture is not permission to avoid design. It is a commitment to make change small, observable, and directionally constrained.
+   </p>
+   <div class="article-meta">
+    <a class="article-author" href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">
+     Hassan Malik &nearrow;
+    </a>
+    &middot; 8 min read &middot; Published 2026-08-23
+   </div>
+   <div class="source-note">
+    <strong>
+     Source reviewed:
+    </strong>
+    Martin Fowler,
+    <a href="https://martinfowler.com/articles/evo-arch-forward.html" rel="noopener noreferrer" target="_blank">
+     Foreword to Building Evolutionary Architectures &nearrow;
+    </a>
+    . This is an independent review; it is not affiliated with Martin Fowler or Thoughtworks.
+   </div>
+   <article class="prose" data-archetype="Design" data-article-type="Publication Review" data-pillar="Architecture">
+    <div class="article-context">
+     Publication Review &middot; Architecture &times; Design &middot;
+     <span class="topic-tag">
+      Evolutionary Architecture
+     </span>
+     &middot;
+     <span class="topic-tag">
+      Feedback Loops
+     </span>
+     &middot;
+     <span class="topic-tag">
+      Fitness Functions
+     </span>
+    </div>
+    <h2>
+     The engineering problem
+    </h2>
+    <p>
+     Architecture must preserve important system qualities while requirements, teams, and technologies change. Fowler contrasts the older assumption that architecture should be completed before implementation with an evolutionary view in which architecture remains active work. The difficult part is retaining direction without pretending the future is knowable.
+    </p>
+    <h2>
+     The approach
+    </h2>
+    <p>
+     The source emphasizes small changes and feedback loops. That pairing matters: small changes reduce the cost of being wrong, while feedback reveals whether the system is moving toward or away from its intended qualities. An evolutionary architecture therefore needs observable constraints&mdash;tests, dependency rules, performance budgets, operability standards, or other fitness functions&mdash;not just flexible code.
+    </p>
+    <h2>
+     Tradeoffs
+    </h2>
+    <p>
+     Evolution lowers the cost of uncertainty but can increase local inconsistency when teams lack shared constraints. Strong up-front design remains appropriate for irreversible boundaries, regulatory obligations, safety properties, and expensive data contracts. The tradeoff is not design versus no design; it is where to commit early and where to preserve options.
+    </p>
+    <h2>
+     What generalizes
+    </h2>
+    <p>
+     Design decisions should state what they protect, how that property will be measured, and what evidence would justify changing direction. Architecture reviews become more useful when they produce a feedback mechanism rather than a static diagram.
+    </p>
+    <h2>
+     What is context-dependent
+    </h2>
+    <p>
+     The pace and safety of evolution depend on test coverage, deployment automation, observability, ownership, and reversibility. A team without those capabilities cannot copy the technique by vocabulary alone.
+    </p>
+    <h2>
+     Architecture review questions
+    </h2>
+    <ul>
+     <li>
+      Which decisions are difficult to reverse, and which can remain provisional?
+     </li>
+     <li>
+      What automated signal tells us an architectural quality is degrading?
+     </li>
+     <li>
+      How small can the next architectural change be?
+     </li>
+     <li>
+      Who owns responding when a fitness signal fails?
+     </li>
+    </ul>
+    <p class="review-scope">
+     The source provides the framing; the implications and review questions above are my synthesis.
+    </p>
+   </article>
+   <div class="article-next">
+    <span>
+     Related reading
+    </span>
+    <a href="software-operations.html">
+     Operating Across Software and Operations &nearrow;
+    </a>
+   </div>
+  </main>
+  <footer class="footer">
+   <div class="container footer-grid">
+    <div>
+     &copy;
+     <span data-year>
+     </span>
+     Hassan Malik
+    </div>
+    <div class="footer-links">
+     <a href="../blog.html">
+      All writing
+     </a>
+     <a href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">
+      LinkedIn &nearrow;
+     </a>
+    </div>
+   </div>
+  </footer>
+  <script src="../assets/main.js">
+  </script>
+ </body>
+</html>
