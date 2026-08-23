@@ -25,10 +25,12 @@ for phrase in ['Applied AI · Principal Software Engineering · Biotech',
     if phrase in body:
         errors.append(f'homepage still uses title-like Principal positioning: {phrase}')
 
-# About page should preserve a clear distinction between current role identity and target-level topics.
+# About page should identify the target role without presenting it as a current title.
 about = (ROOT / 'about.html').read_text(encoding='utf-8')
-if 'problems Staff and Principal engineers are expected to own' not in about:
-    errors.append('about page lacks explicit, non-title Staff/Principal scope framing')
+if 'developing toward Solutions Architect roles' not in about:
+    errors.append('about page does not distinguish target Solutions Architect roles from the current title')
+if 'problems Staff and Principal engineers are expected to own' in about:
+    errors.append('about page retains obsolete Staff/Principal positioning')
 
 # Article typography should be constrained for readable long-form text.
 css = (ROOT / 'assets' / 'styles.css').read_text(encoding='utf-8')
