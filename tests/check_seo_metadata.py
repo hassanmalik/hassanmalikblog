@@ -9,6 +9,8 @@ sitemap=(ROOT/"sitemap.xml").read_text(encoding="utf-8")
 errors=[]; titles=set(); descriptions=set()
 for path in sorted(ROOT.rglob("*.html")):
     rel=path.relative_to(ROOT).as_posix()
+    if ".worktrees" in path.relative_to(ROOT).parts:
+        continue
     soup=BeautifulSoup(path.read_text(encoding="utf-8"),"html.parser")
     title=soup.title.get_text(" ",strip=True) if soup.title else ""
     desc=soup.find("meta",attrs={"name":"description"})

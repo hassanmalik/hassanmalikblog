@@ -5,6 +5,8 @@ import sys
 ROOT=Path(__file__).resolve().parents[1]
 errors=[]
 for path in sorted(ROOT.rglob("*.html")):
+    if ".worktrees" in path.relative_to(ROOT).parts:
+        continue
     soup=BeautifulSoup(path.read_text(encoding="utf-8"),"html.parser")
     main=soup.find("main",id="main-content")
     skip=soup.find("a",string=lambda value:value and value.strip()=="Skip to content")
