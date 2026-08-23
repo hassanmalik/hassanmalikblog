@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width,initial-scale=1" name="viewport">
+  <title>
+   Beyond the Model: What Uber's Michelangelo Reveals About Production AI Platforms &mdash; Hassan Malik
+  </title>
+  <meta content="An independent review of Uber Engineering's Michelangelo ML platform and its lessons for production AI workflows, data, serving, and monitoring." name="description">
+  <link href="../assets/favicon.svg" rel="icon" type="image/svg+xml">
+  <link href="../assets/styles.css" rel="stylesheet">
+  <link href="https://hassanmalik.github.io/hassanmalikblog/posts/review-uber-michelangelo-ml-platform.html" rel="canonical">
+  <meta content="Beyond the Model: What Uber's Michelangelo Reveals About Production AI Platforms" property="og:title">
+  <meta content="Reviewing the platform around the model: data, training, deployment, prediction, and monitoring." property="og:description">
+  <meta content="article" property="og:type">
+  <meta content="https://hassanmalik.github.io/hassanmalikblog/posts/review-uber-michelangelo-ml-platform.html" property="og:url">
+  <script type="application/ld+json">
+   {"@context":"https://schema.org","@type":"Article","headline":"Beyond the Model: What Uber's Michelangelo Reveals About Production AI Platforms","author":{"@type":"Person","name":"Hassan Malik"},"datePublished":"2026-08-23","isBasedOn":"https://www.uber.com/blog/michelangelo-machine-learning-platform/","mainEntityOfPage":"https://hassanmalik.github.io/hassanmalikblog/posts/review-uber-michelangelo-ml-platform.html"}
+  </script>
+ </head>
+ <body>
+  <a class="skip-link" href="#main-content">
+   Skip to content
+  </a>
+  <header class="site-header">
+   <nav aria-label="Primary navigation" class="nav container">
+    <a class="brand" href="../index.html">
+     <span class="brand-mark">
+      HM
+     </span>
+     <span>
+      Hassan Malik
+     </span>
+    </a>
+    <div class="nav-links">
+     <a href="../index.html">
+      Home
+     </a>
+     <a aria-current="page" class="active" href="../blog.html">
+      Writing
+     </a>
+     <a href="../lab.html">
+      Lab
+     </a>
+     <a href="../about.html">
+      About
+     </a>
+     <a class="nav-cta" href="../contact.html">
+      Contact
+     </a>
+    </div>
+    <button aria-expanded="false" aria-label="Toggle navigation" class="mobile-toggle">
+     Menu
+    </button>
+   </nav>
+  </header>
+  <main class="article-shell" id="main-content">
+   <div class="eyebrow">
+    Publication review &middot; Uber Engineering
+   </div>
+   <h1>
+    Beyond the Model: What Uber's Michelangelo Reveals About Production AI Platforms
+   </h1>
+   <p class="article-dek">
+    The durable advantage of an ML platform is not a training algorithm. It is a repeatable path from data to a monitored production decision.
+   </p>
+   <div class="article-meta">
+    <a class="article-author" href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">
+     Hassan Malik &nearrow;
+    </a>
+    &middot; 9 min read &middot; Published 2026-08-23
+   </div>
+   <div class="source-note">
+    <strong>
+     Source reviewed:
+    </strong>
+    Uber Engineering,
+    <a href="https://www.uber.com/blog/michelangelo-machine-learning-platform/" rel="noopener noreferrer" target="_blank">
+     Meet Michelangelo: Uber's Machine Learning Platform &nearrow;
+    </a>
+    . This is an independent review; it is not affiliated with Uber.
+   </div>
+   <article class="prose" data-archetype="Scale" data-article-type="Publication Review" data-pillar="AI & Data">
+    <div class="article-context">
+     Publication Review &middot; AI & Data &times; Scale &middot;
+     <span class="topic-tag">
+      ML Platform
+     </span>
+     &middot;
+     <span class="topic-tag">
+      Feature Store
+     </span>
+     &middot;
+     <span class="topic-tag">
+      Model Serving
+     </span>
+    </div>
+    <h2>
+     The engineering problem
+    </h2>
+    <p>
+     Uber describes a pre-platform environment with fragmented tools, bespoke production paths, limited reproducibility, and no uniform lifecycle for training and prediction data. The scaling problem was organizational as much as computational: each successful model required scarce integration work.
+    </p>
+    <h2>
+     The approach
+    </h2>
+    <p>
+     Michelangelo standardizes six stages&mdash;data management, training, evaluation, deployment, prediction, and monitoring&mdash;and integrates them with Uber's data and compute infrastructure. A shared feature store and common serving paths turn repeated project work into platform capability. The useful abstraction is the workflow around the model.
+    </p>
+    <h2>
+     Tradeoffs
+    </h2>
+    <p>
+     An end-to-end platform creates consistency and leverage, but it also centralizes roadmap pressure and can constrain specialized teams. Build-versus-buy decisions vary by layer: commodity compute may be reused while internal interfaces encode company-specific data, deployment, and governance needs.
+    </p>
+    <h2>
+     What generalizes
+    </h2>
+    <p>
+     Production AI needs versioned data inputs, reproducible transformations, controlled promotion, observable serving, and ownership across the full lifecycle. These requirements apply to LLM and agent systems even when the artifacts are prompts, retrieval configurations, tools, and evaluation sets rather than conventional models.
+    </p>
+    <h2>
+     What is context-dependent
+    </h2>
+    <p>
+     Uber's topology, throughput, feature reuse, and internal infrastructure reflect Uber's scale. Smaller organizations should copy the lifecycle contract before copying the platform footprint. A managed service and a few strong conventions may provide more leverage than a dedicated platform.
+    </p>
+    <h2>
+     Architecture review questions
+    </h2>
+    <ul>
+     <li>
+      Where does a prototype become a supported production artifact?
+     </li>
+     <li>
+      How are training and serving transformations kept consistent?
+     </li>
+     <li>
+      Which layer needs a platform and which only needs a convention?
+     </li>
+     <li>
+      What operational signal causes rollback or retraining?
+     </li>
+    </ul>
+    <p class="review-scope">
+     System details are paraphrased from Uber's article; the transferability analysis is my synthesis.
+    </p>
+   </article>
+   <div class="article-next">
+    <span>
+     Related reading
+    </span>
+    <a href="biotech-ai-stack.html">
+     The Production AI Stack for Biotech R&D &nearrow;
+    </a>
+   </div>
+  </main>
+  <footer class="footer">
+   <div class="container footer-grid">
+    <div>
+     &copy;
+     <span data-year>
+     </span>
+     Hassan Malik
+    </div>
+    <div class="footer-links">
+     <a href="../blog.html">
+      All writing
+     </a>
+     <a href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">
+      LinkedIn &nearrow;
+     </a>
+    </div>
+   </div>
+  </footer>
+  <script src="../assets/main.js">
+  </script>
+ </body>
+</html>

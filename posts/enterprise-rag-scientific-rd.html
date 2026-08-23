@@ -26,6 +26,9 @@
   </script>
  </head>
  <body>
+  <a class="skip-link" href="#main-content">
+   Skip to content
+  </a>
   <header class="site-header">
    <nav aria-label="Primary navigation" class="nav container">
     <a class="brand" href="../index.html">
@@ -64,7 +67,7 @@
     </button>
    </nav>
   </header>
-  <main class="article-shell">
+  <main class="article-shell" id="main-content">
    <div class="eyebrow">
     Enterprise RAG &middot; Scientific R&D
    </div>
@@ -83,8 +86,25 @@
    <div class="article-context">
     Independent reference architecture. No employer-confidential systems or data.
    </div>
-  <article class="prose" data-pillar="AI &amp; Data" data-archetype="Design" data-article-type="Original Essay">
-   <div class="article-context">Original Essay · AI &amp; Data × Design · <span class="topic-tag">RAG</span> · <span class="topic-tag">Retrieval</span> · <span class="topic-tag">Provenance</span> · <span class="topic-tag">Authorization</span></div>
+   <article class="prose" data-archetype="Design" data-article-type="Original Essay" data-pillar="AI & Data">
+    <div class="article-context">
+     Original Essay &middot; AI & Data &times; Design &middot;
+     <span class="topic-tag">
+      RAG
+     </span>
+     &middot;
+     <span class="topic-tag">
+      Retrieval
+     </span>
+     &middot;
+     <span class="topic-tag">
+      Provenance
+     </span>
+     &middot;
+     <span class="topic-tag">
+      Authorization
+     </span>
+    </div>
     <p>
      Enterprise RAG for scientific R&D should not be designed as &ldquo;documents into a vector database, vector database into an LLM.&rdquo; Scientific users need more than semantic similarity. They need evidence that can be inspected, permissions that survive retrieval, provenance that survives synthesis and evaluation that measures whether the answer is actually supported.
     </p>

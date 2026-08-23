@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width,initial-scale=1" name="viewport">
+  <title>
+   Platform Architecture Through Constraints: Reviewing Cloudflare Radar 2.0 &mdash; Hassan Malik
+  </title>
+  <meta content="An independent review of Cloudflare Radar 2.0's architecture and the role of platform constraints, boundaries, and operational simplicity." name="description">
+  <link href="../assets/favicon.svg" rel="icon" type="image/svg+xml">
+  <link href="../assets/styles.css" rel="stylesheet">
+  <link href="https://hassanmalik.github.io/hassanmalikblog/posts/review-cloudflare-radar-platform.html" rel="canonical">
+  <meta content="Platform Architecture Through Constraints: Reviewing Cloudflare Radar 2.0" property="og:title">
+  <meta content="Reviewing how platform capabilities and constraints shape an engineering architecture." property="og:description">
+  <meta content="article" property="og:type">
+  <meta content="https://hassanmalik.github.io/hassanmalikblog/posts/review-cloudflare-radar-platform.html" property="og:url">
+  <script type="application/ld+json">
+   {"@context":"https://schema.org","@type":"Article","headline":"Platform Architecture Through Constraints: Reviewing Cloudflare Radar 2.0","author":{"@type":"Person","name":"Hassan Malik"},"datePublished":"2026-08-23","isBasedOn":"https://blog.cloudflare.com/technology-behind-radar2/","mainEntityOfPage":"https://hassanmalik.github.io/hassanmalikblog/posts/review-cloudflare-radar-platform.html"}
+  </script>
+ </head>
+ <body>
+  <a class="skip-link" href="#main-content">
+   Skip to content
+  </a>
+  <header class="site-header">
+   <nav aria-label="Primary navigation" class="nav container">
+    <a class="brand" href="../index.html">
+     <span class="brand-mark">
+      HM
+     </span>
+     <span>
+      Hassan Malik
+     </span>
+    </a>
+    <div class="nav-links">
+     <a href="../index.html">
+      Home
+     </a>
+     <a aria-current="page" class="active" href="../blog.html">
+      Writing
+     </a>
+     <a href="../lab.html">
+      Lab
+     </a>
+     <a href="../about.html">
+      About
+     </a>
+     <a class="nav-cta" href="../contact.html">
+      Contact
+     </a>
+    </div>
+    <button aria-expanded="false" aria-label="Toggle navigation" class="mobile-toggle">
+     Menu
+    </button>
+   </nav>
+  </header>
+  <main class="article-shell" id="main-content">
+   <div class="eyebrow">
+    Publication review &middot; Cloudflare Engineering
+   </div>
+   <h1>
+    Platform Architecture Through Constraints: Reviewing Cloudflare Radar 2.0
+   </h1>
+   <p class="article-dek">
+    A platform architecture becomes legible when its constraints explain why each boundary exists.
+   </p>
+   <div class="article-meta">
+    <a class="article-author" href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">
+     Hassan Malik &nearrow;
+    </a>
+    &middot; 8 min read &middot; Published 2026-08-23
+   </div>
+   <div class="source-note">
+    <strong>
+     Source reviewed:
+    </strong>
+    Cloudflare Engineering,
+    <a href="https://blog.cloudflare.com/technology-behind-radar2/" rel="noopener noreferrer" target="_blank">
+     How we built it: the technology behind Cloudflare Radar 2.0 &nearrow;
+    </a>
+    . This is an independent review; it is not affiliated with Cloudflare.
+   </div>
+   <article class="prose" data-archetype="Build" data-article-type="Publication Review" data-pillar="Platform & Infrastructure">
+    <div class="article-context">
+     Publication Review &middot; Platform & Infrastructure &times; Build &middot;
+     <span class="topic-tag">
+      Cloud Architecture
+     </span>
+     &middot;
+     <span class="topic-tag">
+      Data Delivery
+     </span>
+     &middot;
+     <span class="topic-tag">
+      Platform Reuse
+     </span>
+    </div>
+    <h2>
+     The engineering problem
+    </h2>
+    <p>
+     Radar turns large, changing Internet datasets into a public product. The platform must move data through collection and preparation into APIs and an interactive experience while remaining responsive and operable.
+    </p>
+    <h2>
+     The approach
+    </h2>
+    <p>
+     Cloudflare's article exposes a high-level architecture rather than treating the interface as an isolated website. The important pattern is separation of concerns: data processing, APIs, and presentation have different change rates and operating characteristics, while existing Cloudflare capabilities supply deployment and edge delivery primitives.
+    </p>
+    <h2>
+     Tradeoffs
+    </h2>
+    <p>
+     Reusing platform services reduces operational surface area and accelerates delivery, but it couples the product to internal conventions. Precomputed data improves predictable reads at the cost of freshness and pipeline complexity. Rich client interactions improve exploration but require careful payload and rendering decisions.
+    </p>
+    <h2>
+     What generalizes
+    </h2>
+    <p>
+     Platform teams create leverage by making the preferred operational path the easiest path. Product architecture should explicitly identify which capabilities are differentiated and which should be inherited from a shared platform.
+    </p>
+    <h2>
+     What is context-dependent
+    </h2>
+    <p>
+     Cloudflare can build around its own network, data, and edge primitives. Teams elsewhere should not reproduce that topology without the same traffic, ownership, and economics. The reusable lesson is constraint-driven boundaries, not a list of technologies.
+    </p>
+    <h2>
+     Architecture review questions
+    </h2>
+    <ul>
+     <li>
+      Which system capability is unique to the product?
+     </li>
+     <li>
+      Which reliability responsibilities can a platform absorb?
+     </li>
+     <li>
+      What freshness does the user actually require?
+     </li>
+     <li>
+      Where does reuse create unacceptable coupling?
+     </li>
+    </ul>
+    <p class="review-scope">
+     The architecture description comes from Cloudflare's article; the review questions and generalization are my synthesis.
+    </p>
+   </article>
+   <div class="article-next">
+    <span>
+     Related reading
+    </span>
+    <a href="decision-systems.html">
+     Dashboards Are Not Decision Systems &nearrow;
+    </a>
+   </div>
+  </main>
+  <footer class="footer">
+   <div class="container footer-grid">
+    <div>
+     &copy;
+     <span data-year>
+     </span>
+     Hassan Malik
+    </div>
+    <div class="footer-links">
+     <a href="../blog.html">
+      All writing
+     </a>
+     <a href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">
+      LinkedIn &nearrow;
+     </a>
+    </div>
+   </div>
+  </footer>
+  <script src="../assets/main.js">
+  </script>
+ </body>
+</html>

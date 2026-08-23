@@ -20,6 +20,9 @@
   </script>
  </head>
  <body>
+  <a class="skip-link" href="#main-content">
+   Skip to content
+  </a>
   <header class="site-header">
    <nav class="nav container">
     <a class="brand" href="../index.html">
@@ -30,7 +33,7 @@
       Hassan Malik
      </span>
     </a>
-    <button aria-expanded="false" class="mobile-toggle">
+    <button aria-expanded="false" aria-label="Toggle navigation" class="mobile-toggle">
      Menu
     </button>
     <div class="nav-links">
@@ -55,7 +58,7 @@
     </div>
    </nav>
   </header>
-  <main class="article-shell">
+  <main class="article-shell" id="main-content">
    <div class="eyebrow">
     AI architecture
    </div>
@@ -71,8 +74,25 @@
     </a>
     &middot; 8 min read &middot; Architecture note
    </div>
-  <article class="prose" data-pillar="AI &amp; Data" data-archetype="Build" data-article-type="Original Essay">
-   <div class="article-context">Original Essay · AI &amp; Data × Build · <span class="topic-tag">GenAI</span> · <span class="topic-tag">Data Platforms</span> · <span class="topic-tag">Evaluation</span> · <span class="topic-tag">Human-in-the-loop</span></div>
+   <article class="prose" data-archetype="Build" data-article-type="Original Essay" data-pillar="AI & Data">
+    <div class="article-context">
+     Original Essay &middot; AI & Data &times; Build &middot;
+     <span class="topic-tag">
+      GenAI
+     </span>
+     &middot;
+     <span class="topic-tag">
+      Data Platforms
+     </span>
+     &middot;
+     <span class="topic-tag">
+      Evaluation
+     </span>
+     &middot;
+     <span class="topic-tag">
+      Human-in-the-loop
+     </span>
+    </div>
     <p>
      AI architecture in biotech becomes more useful when we stop treating &ldquo;the LLM&rdquo; as the system. A production system is a chain of boundaries: data access, retrieval, transformation, model reasoning, tool use, review, logging, and feedback. Each boundary is a place where quality can improve&mdash;or where trust can collapse.
     </p>
@@ -145,6 +165,14 @@
      That architecture is less glamorous than &ldquo;put an agent on it.&rdquo; It is also much closer to the kind of system I would trust to become part of serious scientific work.
     </p>
    </article>
+   <div class="article-next">
+    <span>
+     Related reading
+    </span>
+    <a href="enterprise-rag-scientific-rd.html">
+     Continue reading &nearrow;
+    </a>
+   </div>
   </main>
   <footer class="footer">
    <div class="container footer-grid">

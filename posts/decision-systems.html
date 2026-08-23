@@ -20,6 +20,9 @@
   </script>
  </head>
  <body>
+  <a class="skip-link" href="#main-content">
+   Skip to content
+  </a>
   <header class="site-header">
    <nav class="nav container">
     <a class="brand" href="../index.html">
@@ -30,7 +33,7 @@
       Hassan Malik
      </span>
     </a>
-    <button aria-expanded="false" class="mobile-toggle">
+    <button aria-expanded="false" aria-label="Toggle navigation" class="mobile-toggle">
      Menu
     </button>
     <div class="nav-links">
@@ -49,10 +52,13 @@
      <a href="../about.html">
       About
      </a>
+     <a class="nav-cta" href="../contact.html">
+      Contact
+     </a>
     </div>
    </nav>
   </header>
-  <main class="article-shell">
+  <main class="article-shell" id="main-content">
    <div class="eyebrow">
     Data systems
    </div>
@@ -68,8 +74,21 @@
     </a>
     &middot; 5 min read
    </div>
-  <article class="prose" data-pillar="Technical Leadership" data-archetype="Strategize" data-article-type="Original Essay">
-   <div class="article-context">Original Essay · Technical Leadership × Strategize · <span class="topic-tag">Decision Systems</span> · <span class="topic-tag">Ownership</span> · <span class="topic-tag">Operating Models</span></div>
+   <article class="prose" data-archetype="Strategize" data-article-type="Original Essay" data-pillar="Technical Leadership">
+    <div class="article-context">
+     Original Essay &middot; Technical Leadership &times; Strategize &middot;
+     <span class="topic-tag">
+      Decision Systems
+     </span>
+     &middot;
+     <span class="topic-tag">
+      Ownership
+     </span>
+     &middot;
+     <span class="topic-tag">
+      Operating Models
+     </span>
+    </div>
     <p>
      I&rsquo;ve worked in environments where dashboards mattered enormously: logistics, returns, supply chain, manufacturing programs, and R&D. The best ones did more than display numbers. They shortened the distance between seeing a problem and doing something about it.
     </p>
@@ -92,6 +111,14 @@
      The evolution is simple: dashboard &rarr; diagnostic context &rarr; recommended action &rarr; controlled automation. Not every process should reach full automation, but every important metric should have a designed path to action.
     </p>
    </article>
+   <div class="article-next">
+    <span>
+     Related reading
+    </span>
+    <a href="software-operations.html">
+     Continue reading &nearrow;
+    </a>
+   </div>
   </main>
   <footer class="footer">
    <div class="container footer-grid">
