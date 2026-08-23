@@ -15,3 +15,11 @@ https://hassanmalik.github.io/hassanmalikblog/
 
 LinkedIn:
 https://www.linkedin.com/in/malik-msee/
+
+PUBLICATION MAINTENANCE
+
+1. Install checks: python -m pip install -r requirements-dev.txt
+2. Classify every post with data-pillar, data-archetype, and data-article-type.
+3. Add each new article to blog.html and sitemap.xml.
+4. For publication reviews, add a first-party source note and independence disclaimer.
+5. Run before publishing: python tools/check_site.py
