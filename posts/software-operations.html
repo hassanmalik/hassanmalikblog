@@ -1,5 +1,117 @@
 <!DOCTYPE html>
-
-<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Operating Across Software and Operations — Hassan Malik</title><link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/><link href="../assets/styles.css" rel="stylesheet"/><link href="https://hassanmalik.github.io/hassanmalikblog/posts/software-operations.html" rel="canonical"/><meta content="https://hassanmalik.github.io/hassanmalikblog/posts/software-operations.html" property="og:url"/><meta content="Hassan Malik" name="author"/><meta content="A field note on interfaces, operating models, cross-functional systems and the technical leadership required to turn software into operational leverage." name="description"/><meta content="Operating Across Software and Operations" property="og:title"/><meta content="A field note on interfaces, operating models, cross-functional systems and the technical leadership required to turn software into operational leverage." property="og:description"/><meta content="article" property="og:type"/><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Operating Across Software and Operations","description":"A field note on interfaces, operating models, cross-functional systems and the technical leadership required to turn software into operational leverage.","author":{"@type":"Person","name":"Hassan Malik","url":"https://hassanmalik.github.io/hassanmalikblog/","sameAs":["https://www.linkedin.com/in/malik-msee/","https://github.com/hassanmalik"]},"dateModified":"2026-08-22","mainEntityOfPage":"https://hassanmalik.github.io/hassanmalikblog/posts/software-operations.html","keywords":["technical leadership","software architecture","cross-functional systems","operations"]}</script></head><body>
-<header class="site-header"><nav class="nav container"><a class="brand" href="../index.html"><span class="brand-mark">HM</span><span>Hassan Malik</span></a><button aria-expanded="false" class="mobile-toggle">Menu</button><div class="nav-links"><a href="../index.html">Home</a><a class="active" href="../blog.html">Writing</a><a href="../lab.html">Lab</a><a href="../experience.html">Experience</a><a href="../about.html">About</a></div></nav></header>
-<main class="article-shell"><div class="eyebrow">Technical leadership</div><h1>Operating Across Software and Operations</h1><p class="article-dek">The most expensive failures often happen at interfaces: code to process, team to team, system to supplier, signal to decision.</p><div class="article-meta"><a class="article-author" href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">Hassan Malik ↗</a> · 6 min read</div><article class="prose"><p>My career has included software engineering, data engineering, technical program work, release management, supply chain, and R&amp;D applications. The common thread is not a specific technology. It is interface management.</p><h2>Interfaces are where assumptions hide</h2><p>An API makes its contract explicit. Organizations often do not. Technical leaders have to surface the hidden contracts: who owns the source of truth, who can approve a change, what happens when data is late, which metric is authoritative, and how recovery works.</p><h2>Translate without flattening</h2><p>Cross-functional work requires translation, but translation should not remove the technical constraint. The job is to make the constraint legible to the next decision-maker while preserving what matters.</p><h2>Architecture includes operating model</h2><p>If a system requires behavior that the organization cannot reliably perform, the architecture is incomplete. Good design accounts for ownership, review paths, monitoring, escalation, and change management alongside services and databases.</p></article></main><footer class="footer"><div class="container footer-grid"><div>© <span data-year=""></span> Hassan Malik</div><div class="footer-links"><a href="../blog.html">All writing</a><a href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">LinkedIn ↗</a></div></div></footer><script src="../assets/main.js"></script></body></html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8">
+  <meta content="width=device-width,initial-scale=1" name="viewport">
+  <title>
+   Operating Across Software and Operations &mdash; Hassan Malik
+  </title>
+  <link href="../assets/favicon.svg" rel="icon" type="image/svg+xml">
+  <link href="../assets/styles.css" rel="stylesheet">
+  <link href="https://hassanmalik.github.io/hassanmalikblog/posts/software-operations.html" rel="canonical">
+  <meta content="https://hassanmalik.github.io/hassanmalikblog/posts/software-operations.html" property="og:url">
+  <meta content="Hassan Malik" name="author">
+  <meta content="A field note on interfaces, operating models, cross-functional systems and the technical leadership required to turn software into operational leverage." name="description">
+  <meta content="Operating Across Software and Operations" property="og:title">
+  <meta content="A field note on interfaces, operating models, cross-functional systems and the technical leadership required to turn software into operational leverage." property="og:description">
+  <meta content="article" property="og:type">
+  <script type="application/ld+json">
+   {"@context":"https://schema.org","@type":"BlogPosting","headline":"Operating Across Software and Operations","description":"A field note on interfaces, operating models, cross-functional systems and the technical leadership required to turn software into operational leverage.","author":{"@type":"Person","name":"Hassan Malik","url":"https://hassanmalik.github.io/hassanmalikblog/","sameAs":["https://www.linkedin.com/in/malik-msee/","https://github.com/hassanmalik"]},"dateModified":"2026-08-22","mainEntityOfPage":"https://hassanmalik.github.io/hassanmalikblog/posts/software-operations.html","keywords":["technical leadership","software architecture","cross-functional systems","operations"]}
+  </script>
+ </head>
+ <body>
+  <header class="site-header">
+   <nav class="nav container">
+    <a class="brand" href="../index.html">
+     <span class="brand-mark">
+      HM
+     </span>
+     <span>
+      Hassan Malik
+     </span>
+    </a>
+    <button aria-expanded="false" class="mobile-toggle">
+     Menu
+    </button>
+    <div class="nav-links">
+     <a href="../index.html">
+      Home
+     </a>
+     <a class="active" href="../blog.html">
+      Writing
+     </a>
+     <a href="../lab.html">
+      Lab
+     </a>
+     <a href="../experience.html">
+      Experience
+     </a>
+     <a href="../about.html">
+      About
+     </a>
+    </div>
+   </nav>
+  </header>
+  <main class="article-shell">
+   <div class="eyebrow">
+    Technical leadership
+   </div>
+   <h1>
+    Operating Across Software and Operations
+   </h1>
+   <p class="article-dek">
+    The most expensive failures often happen at interfaces: code to process, team to team, system to supplier, signal to decision.
+   </p>
+   <div class="article-meta">
+    <a class="article-author" href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">
+     Hassan Malik &nearrow;
+    </a>
+    &middot; 6 min read
+   </div>
+  <article class="prose" data-pillar="Technical Leadership" data-archetype="Strategize" data-article-type="Original Essay">
+   <div class="article-context">Original Essay · Technical Leadership × Strategize · <span class="topic-tag">Cross-team Influence</span> · <span class="topic-tag">Operating Models</span> · <span class="topic-tag">Architecture</span></div>
+    <p>
+     My career has included software engineering, data engineering, technical program work, release management, supply chain, and R&D applications. The common thread is not a specific technology. It is interface management.
+    </p>
+    <h2>
+     Interfaces are where assumptions hide
+    </h2>
+    <p>
+     An API makes its contract explicit. Organizations often do not. Technical leaders have to surface the hidden contracts: who owns the source of truth, who can approve a change, what happens when data is late, which metric is authoritative, and how recovery works.
+    </p>
+    <h2>
+     Translate without flattening
+    </h2>
+    <p>
+     Cross-functional work requires translation, but translation should not remove the technical constraint. The job is to make the constraint legible to the next decision-maker while preserving what matters.
+    </p>
+    <h2>
+     Architecture includes operating model
+    </h2>
+    <p>
+     If a system requires behavior that the organization cannot reliably perform, the architecture is incomplete. Good design accounts for ownership, review paths, monitoring, escalation, and change management alongside services and databases.
+    </p>
+   </article>
+  </main>
+  <footer class="footer">
+   <div class="container footer-grid">
+    <div>
+     &copy;
+     <span data-year>
+     </span>
+     Hassan Malik
+    </div>
+    <div class="footer-links">
+     <a href="../blog.html">
+      All writing
+     </a>
+     <a href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">
+      LinkedIn &nearrow;
+     </a>
+    </div>
+   </div>
+  </footer>
+  <script src="../assets/main.js">
+  </script>
+ </body>
+</html>

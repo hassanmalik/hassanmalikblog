@@ -72,6 +72,14 @@ When a domain is purchased:
 
 No package manager or build step is required.
 
+## Verification
+
+Install the development-only HTML parser with `python -m pip install beautifulsoup4`, then run the complete publication check suite:
+
+```powershell
+python tools/check_site.py
+```
+
 
 ## SEO/content update (2026-08-22)
 
