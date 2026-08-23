@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://hassanmalik.github.io/hassanmalikblog/sitemap.xml
