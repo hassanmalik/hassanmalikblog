@@ -71,3 +71,8 @@ When a domain is purchased:
 - `assets/` — CSS, JavaScript and favicon
 
 No package manager or build step is required.
+
+
+## SEO/content update (2026-08-22)
+
+The publication now targets Principal Software Engineering, Applied AI, AI Architecture, Distributed Systems, Biotech/Life Sciences, Enterprise RAG, LLM Evaluation, and Forward Deployed Engineering search intent. GitHub Pages is intended to deploy directly from the `main` branch.

@@ -1,0 +1,17 @@
+HASSANMALIKBLOG — READABILITY + LINKEDIN + STAFF/PRINCIPAL POSITIONING UPDATE
+
+1. Extract this ZIP into your EXISTING local Git repository folder:
+   C:\Users\hassa\Downloads\hassanmalikblog-ready-to-publish
+   Choose "Replace files" when Windows asks.
+
+2. From PowerShell in that same folder, run:
+   Set-ExecutionPolicy -Scope Process Bypass
+   .\deploy-update.ps1
+
+This update keeps the visual design, improves long-form readability, points every page to your current LinkedIn profile, and reframes Staff/Principal language as the scope of the engineering problems you write about rather than as a claimed current title.
+
+Live site:
+https://hassanmalik.github.io/hassanmalikblog/
+
+LinkedIn:
+https://www.linkedin.com/in/malik-msee/

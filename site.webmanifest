@@ -1,10 +1,10 @@
 {
-  "name": "Hassan Malik — AI × Biotech × Production Systems",
+  "name": "Hassan Malik \u2014 Principal Software Engineering & Applied AI",
   "short_name": "Hassan Malik",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#07100f",
-  "theme_color": "#07100f",
+  "background_color": "#f3f0e9",
+  "theme_color": "#101214",
   "icons": []
 }

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>Enterprise RAG Architecture for Scientific R&amp;D: Retrieval, Evidence and Provenance — Hassan Malik</title><meta content="A production enterprise RAG architecture for scientific R&amp;D covering permission-aware retrieval, hybrid search, reranking, claim-level provenance, abstention and LLM evaluation." name="description"/><meta content="#f3f0e9" name="theme-color"/><link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/><link href="../assets/styles.css" rel="stylesheet"/><link href="https://hassanmalik.github.io/hassanmalikblog/posts/enterprise-rag-scientific-rd.html" rel="canonical"/><meta content="Enterprise RAG Architecture for Scientific R&amp;D: Retrieval, Evidence and Provenance" property="og:title"/><meta content="A production enterprise RAG architecture for scientific R&amp;D covering permission-aware retrieval, hybrid search, reranking, claim-level provenance, abstention and LLM evaluation." property="og:description"/><meta content="article" property="og:type"/><meta content="https://hassanmalik.github.io/hassanmalikblog/posts/enterprise-rag-scientific-rd.html" property="og:url"/><meta content="2026-08-22" property="article:published_time"/><meta content="2026-08-22" property="article:modified_time"/><meta content="Hassan Malik" name="author"/><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"Enterprise RAG Architecture for Scientific R&D: Retrieval, Evidence and Provenance","description":"A production enterprise RAG architecture for scientific R&D covering permission-aware retrieval, hybrid search, reranking, claim-level provenance, abstention and LLM evaluation.","author":{"@type":"Person","name":"Hassan Malik","url":"https://hassanmalik.github.io/hassanmalikblog/","sameAs":["https://www.linkedin.com/in/malik-msee/","https://github.com/hassanmalik"]},"datePublished":"2026-08-22","dateModified":"2026-08-22","mainEntityOfPage":"https://hassanmalik.github.io/hassanmalikblog/posts/enterprise-rag-scientific-rd.html","keywords":["enterprise RAG","RAG architecture","scientific R&D","biotech","life sciences","retrieval","provenance","hybrid search","LLM evaluation"],"publisher":{"@type":"Person","name":"Hassan Malik","sameAs":["https://www.linkedin.com/in/malik-msee/","https://github.com/hassanmalik"]}}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://hassanmalik.github.io/hassanmalikblog/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://hassanmalik.github.io/hassanmalikblog/blog.html"},{"@type":"ListItem","position":3,"name":"Enterprise RAG Architecture for Scientific R&D: Retrieval, Evidence and Provenance","item":"https://hassanmalik.github.io/hassanmalikblog/posts/enterprise-rag-scientific-rd.html"}]}</script></head><body><header class="site-header"><nav aria-label="Primary navigation" class="nav container"><a class="brand" href="../index.html"><span class="brand-mark">HM</span><span>Hassan Malik</span></a><div class="nav-links"><a class="" href="../index.html">Home</a><a class="active" href="../blog.html">Writing</a><a class="" href="../lab.html">Lab</a><a class="" href="../experience.html">Experience</a><a class="" href="../about.html">About</a><a class="nav-cta" href="../contact.html">Contact</a></div><a class="nav-side" href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">LinkedIn ↗</a><button aria-expanded="false" aria-label="Toggle navigation" class="mobile-toggle">Menu</button></nav></header><main class="article-shell"><div class="eyebrow">Enterprise RAG · Scientific R&amp;D</div><h1>Enterprise RAG Architecture for Scientific R&amp;D: Retrieval, Evidence and Provenance</h1><p class="article-dek">Scientific RAG should optimize for evidence quality, provenance and reviewability—not merely semantic similarity and fluent answers.</p><div class="article-meta"><a class="article-author" href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">Hassan Malik ↗</a> · 12 min read · Published 2026-08-22</div><div class="article-context">Independent reference architecture. No employer-confidential systems or data.</div><article class="prose">
+<p>Enterprise RAG for scientific R&amp;D should not be designed as “documents into a vector database, vector database into an LLM.” Scientific users need more than semantic similarity. They need evidence that can be inspected, permissions that survive retrieval, provenance that survives synthesis and evaluation that measures whether the answer is actually supported.</p>
+<h2>Start with a source model, not embeddings</h2>
+<p>Before chunking, define the identity of the source: document ID, version, section hierarchy, author or system of record, timestamps, project or study context, access policy and any structured entities that matter to the workflow.</p>
+<p>Embeddings are one retrieval representation. They should not become the canonical representation of the source.</p>
+<h2>Parse for meaning and recoverability</h2>
+<p>Scientific documents often contain tables, figure captions, references, section dependencies and repeated terminology. Chunk boundaries should preserve enough hierarchy to reconstruct why a passage means what it means.</p>
+<p>Store parent-child relationships so that a retrieval result can expand from a matched fragment to the surrounding section or source artifact without losing identity.</p>
+<h2>Authorization must participate in retrieval</h2>
+<p>Permission checks after retrieval are too late if unauthorized content already reached the model context. Filter candidate evidence using the user’s effective access rights before context construction.</p>
+<p>In multi-project or multi-tenant environments, this may require a combination of metadata filters, row-level controls, index partitioning and service-layer authorization. The correct mechanism depends on scale and threat model; the requirement is that retrieval cannot weaken source-system permissions.</p>
+<h2>Use hybrid retrieval deliberately</h2>
+<p>Scientific language contains identifiers, exact terms and domain-specific phrases that lexical retrieval handles well, while semantic retrieval helps with conceptual similarity and paraphrase. A strong baseline often combines both, then reranks a candidate set using the actual query and document context.</p>
+<pre><code>query understanding
+      ↓
+metadata / permission filters
+      ↓
+lexical candidates + semantic candidates
+      ↓
+fusion
+      ↓
+reranking
+      ↓
+evidence assembly</code></pre>
+<h2>Separate retrieval relevance from evidence sufficiency</h2>
+<p>A passage can be relevant without supporting the claim the user wants to make. Add an evidence-sufficiency step that asks whether the retrieved set contains enough information to answer, compare or conclude.</p>
+<p>This is where abstention becomes a product feature. “I found related material but not enough evidence to support that conclusion” is often more useful than confident synthesis.</p>
+<h2>Build provenance at claim level</h2>
+<p>Instead of attaching three citations to the end of a generated paragraph, decompose the response into claims and map each claim to the evidence used to support it. That creates a review surface:</p>
+<pre><code>Claim A → Source 12 / section 4.2 / version 7
+Claim B → Source 03 / table 8 / version 2
+Claim C → insufficient evidence → flagged</code></pre>
+<p>Claim-level provenance is valuable for users and for evaluation because it lets the system measure support, not merely citation presence.</p>
+<h2>Evaluation needs a leakage-resistant design</h2>
+<p>Scientific RAG evaluation should separate the corpus used for retrieval from labels or historical outcomes that would reveal the answer. A benchmark can look excellent while being useless if the future answer, regulator question or review annotation is accidentally included in indexed context.</p>
+<p>I would track at least retrieval recall, reranker quality, evidence support, answer completeness, abstention precision, citation correctness, latency and reviewer agreement.</p>
+<h2>Reference architecture</h2>
+<pre><code>Sources
+  ↓
+versioned ingestion + parsing
+  ↓
+canonical source store
+  ├── lexical index
+  ├── vector index
+  └── structured metadata
+          ↓
+user identity + policy
+          ↓
+query understanding
+          ↓
+permission-aware hybrid retrieval
+          ↓
+reranking + evidence assembly
+          ↓
+LLM synthesis with structured claims
+          ↓
+claim-to-source verification
+          ↓
+answer + provenance + abstention state
+          ↓
+human review + evaluation telemetry</code></pre>
+<h2>What I would optimize only after quality is measurable</h2>
+<p>Once the evaluation harness is credible, then tune chunking, embedding models, rerankers, caching, context windows and model routing. Without a trustworthy measurement system, those changes are architecture by anecdote.</p>
+<blockquote>The goal of scientific RAG is not to retrieve text that sounds related. It is to construct an inspectable chain from question to evidence to claim.</blockquote>
+<p>That shifts RAG from a chatbot feature into an evidence architecture—much closer to what a serious scientific workflow needs.</p>
+</article><div class="article-next"><span>Continue exploring</span><a href="../blog.html">All architecture &amp; field engineering writing ↗</a></div></main><footer class="footer"><div class="container footer-grid"><div>© <span data-year=""></span> Hassan Malik · Connecticut / Boston</div><div class="footer-links"><a href="../blog.html">Writing</a><a href="../lab.html">Lab</a><a href="../experience.html">Experience</a><a href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">LinkedIn ↗</a><a href="https://github.com/hassanmalik">GitHub ↗</a></div></div></footer><script src="../assets/main.js"></script></body></html>

@@ -1,13 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url><loc>https://hassanmalik.github.io/hassanmalikblog/</loc></url>
-  <url><loc>https://hassanmalik.github.io/hassanmalikblog/blog.html</loc></url>
-  <url><loc>https://hassanmalik.github.io/hassanmalikblog/lab.html</loc></url>
-  <url><loc>https://hassanmalik.github.io/hassanmalikblog/experience.html</loc></url>
-  <url><loc>https://hassanmalik.github.io/hassanmalikblog/about.html</loc></url>
-  <url><loc>https://hassanmalik.github.io/hassanmalikblog/contact.html</loc></url>
-  <url><loc>https://hassanmalik.github.io/hassanmalikblog/posts/biotech-ai-stack.html</loc></url>
-  <url><loc>https://hassanmalik.github.io/hassanmalikblog/posts/decision-systems.html</loc></url>
-  <url><loc>https://hassanmalik.github.io/hassanmalikblog/posts/scientist-adoption.html</loc></url>
-  <url><loc>https://hassanmalik.github.io/hassanmalikblog/posts/software-operations.html</loc></url>
+  <url><loc>https://hassanmalik.github.io/hassanmalikblog/</loc><lastmod>2026-08-22</lastmod></url>
+  <url><loc>https://hassanmalik.github.io/hassanmalikblog/blog.html</loc><lastmod>2026-08-22</lastmod></url>
+  <url><loc>https://hassanmalik.github.io/hassanmalikblog/lab.html</loc><lastmod>2026-08-22</lastmod></url>
+  <url><loc>https://hassanmalik.github.io/hassanmalikblog/experience.html</loc><lastmod>2026-08-22</lastmod></url>
+  <url><loc>https://hassanmalik.github.io/hassanmalikblog/about.html</loc><lastmod>2026-08-22</lastmod></url>
+  <url><loc>https://hassanmalik.github.io/hassanmalikblog/contact.html</loc><lastmod>2026-08-22</lastmod></url>
+  <url><loc>https://hassanmalik.github.io/hassanmalikblog/posts/ai-architecture-biotech-workflow-boundary.html</loc><lastmod>2026-08-22</lastmod></url>
+  <url><loc>https://hassanmalik.github.io/hassanmalikblog/posts/distributed-systems-agentic-ai.html</loc><lastmod>2026-08-22</lastmod></url>
+  <url><loc>https://hassanmalik.github.io/hassanmalikblog/posts/enterprise-rag-scientific-rd.html</loc><lastmod>2026-08-22</lastmod></url>
+  <url><loc>https://hassanmalik.github.io/hassanmalikblog/posts/forward-deployed-engineering-prototype-risk.html</loc><lastmod>2026-08-22</lastmod></url>
+  <url><loc>https://hassanmalik.github.io/hassanmalikblog/posts/biotech-ai-stack.html</loc><lastmod>2026-08-22</lastmod></url>
+  <url><loc>https://hassanmalik.github.io/hassanmalikblog/posts/decision-systems.html</loc><lastmod>2026-08-22</lastmod></url>
+  <url><loc>https://hassanmalik.github.io/hassanmalikblog/posts/scientist-adoption.html</loc><lastmod>2026-08-22</lastmod></url>
+  <url><loc>https://hassanmalik.github.io/hassanmalikblog/posts/software-operations.html</loc><lastmod>2026-08-22</lastmod></url>
 </urlset>

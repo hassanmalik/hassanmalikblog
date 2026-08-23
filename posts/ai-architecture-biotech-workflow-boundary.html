@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1" name="viewport"/><title>AI Architecture for Biotech: Why Production AI Systems Fail at the Workflow Boundary — Hassan Malik</title><meta content="An independent reference architecture for production AI in biotech and life sciences, covering authorization, evidence, orchestration, agents, human review and evaluation." name="description"/><meta content="#f3f0e9" name="theme-color"/><link href="../assets/favicon.svg" rel="icon" type="image/svg+xml"/><link href="../assets/styles.css" rel="stylesheet"/><link href="https://hassanmalik.github.io/hassanmalikblog/posts/ai-architecture-biotech-workflow-boundary.html" rel="canonical"/><meta content="AI Architecture for Biotech: Why Production AI Systems Fail at the Workflow Boundary" property="og:title"/><meta content="An independent reference architecture for production AI in biotech and life sciences, covering authorization, evidence, orchestration, agents, human review and evaluation." property="og:description"/><meta content="article" property="og:type"/><meta content="https://hassanmalik.github.io/hassanmalikblog/posts/ai-architecture-biotech-workflow-boundary.html" property="og:url"/><meta content="2026-08-22" property="article:published_time"/><meta content="2026-08-22" property="article:modified_time"/><meta content="Hassan Malik" name="author"/><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"AI Architecture for Biotech: Why Production AI Systems Fail at the Workflow Boundary","description":"An independent reference architecture for production AI in biotech and life sciences, covering authorization, evidence, orchestration, agents, human review and evaluation.","author":{"@type":"Person","name":"Hassan Malik","url":"https://hassanmalik.github.io/hassanmalikblog/","sameAs":["https://www.linkedin.com/in/malik-msee/","https://github.com/hassanmalik"]},"datePublished":"2026-08-22","dateModified":"2026-08-22","mainEntityOfPage":"https://hassanmalik.github.io/hassanmalikblog/posts/ai-architecture-biotech-workflow-boundary.html","keywords":["AI architecture","biotech","life sciences","production AI systems","agentic AI","scientific R&D","human-in-the-loop"],"publisher":{"@type":"Person","name":"Hassan Malik","sameAs":["https://www.linkedin.com/in/malik-msee/","https://github.com/hassanmalik"]}}</script><script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Home","item":"https://hassanmalik.github.io/hassanmalikblog/"},{"@type":"ListItem","position":2,"name":"Writing","item":"https://hassanmalik.github.io/hassanmalikblog/blog.html"},{"@type":"ListItem","position":3,"name":"AI Architecture for Biotech: Why Production AI Systems Fail at the Workflow Boundary","item":"https://hassanmalik.github.io/hassanmalikblog/posts/ai-architecture-biotech-workflow-boundary.html"}]}</script></head><body><header class="site-header"><nav aria-label="Primary navigation" class="nav container"><a class="brand" href="../index.html"><span class="brand-mark">HM</span><span>Hassan Malik</span></a><div class="nav-links"><a class="" href="../index.html">Home</a><a class="active" href="../blog.html">Writing</a><a class="" href="../lab.html">Lab</a><a class="" href="../experience.html">Experience</a><a class="" href="../about.html">About</a><a class="nav-cta" href="../contact.html">Contact</a></div><a class="nav-side" href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">LinkedIn ↗</a><button aria-expanded="false" aria-label="Toggle navigation" class="mobile-toggle">Menu</button></nav></header><main class="article-shell"><div class="eyebrow">AI architecture · Biotech &amp; life sciences</div><h1>AI Architecture for Biotech: Why Production AI Systems Fail at the Workflow Boundary</h1><p class="article-dek">The model is rarely the hardest part. Production AI succeeds or fails at the boundaries between evidence, state, action and human judgment.</p><div class="article-meta"><a class="article-author" href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">Hassan Malik ↗</a> · 11 min read · Published 2026-08-22</div><div class="article-context">Independent reference architecture. No employer-confidential systems or data.</div><article class="prose">
+<p>Production AI in biotech is often framed as a model-selection problem: choose a foundation model, connect a vector database, add a chat interface, and iterate on prompts. That can produce a compelling demo. It does not produce a dependable scientific system.</p>
+<p>The more useful architecture question is: <strong>where does the workflow cross a boundary that can invalidate the result?</strong> In scientific software, those boundaries are everywhere—identity, evidence, orchestration, reasoning, controlled action, human review, and feedback.</p>
+<h2>The model is one component in a decision system</h2>
+<p>Consider a seemingly simple request: “Which formulation performed best, and why?” The answer may depend on assay results, formulation metadata, experimental conditions, document versions, outlier handling, historical context, and the scientist’s definition of “best.” A language model can synthesize evidence, but it cannot make missing system boundaries disappear.</p>
+<p>A production architecture therefore starts with a decision loop:</p>
+<pre><code>scientific question
+→ authorized evidence
+→ retrieval + structured data
+→ context construction
+→ model reasoning
+→ claim verification
+→ human review
+→ controlled action
+→ feedback</code></pre>
+<h2>Boundary 1: identity and authorization</h2>
+<p>Authentication at the chat interface is insufficient. Authorization has to survive retrieval. If a user is not permitted to read a source document, the retrieval layer cannot allow the model to see it merely because the embedding is semantically relevant.</p>
+<p>This pushes permissions into the evidence plane: document ACLs, row-level constraints, tenant or project boundaries, and version-aware access checks should participate in retrieval itself. The architecture should make it impossible for a later prompt instruction to “undo” an access decision made earlier.</p>
+<h2>Boundary 2: evidence and provenance</h2>
+<p>Similarity is not evidence. A useful scientific RAG system should preserve source identity, document hierarchy, section, version, timestamps, and enough context to let a reviewer inspect the basis of an answer. Provenance should be attached to claims, not sprinkled onto a paragraph after generation.</p>
+<p>The system also needs a concept of evidence sufficiency. Sometimes the correct behavior is not a fluent answer; it is an explicit abstention because the retrieved material does not support the requested conclusion.</p>
+<h2>Boundary 3: orchestration and state</h2>
+<p>Once an AI system uses tools, it becomes a workflow system. The question is who owns state. My default is that probabilistic components may propose what should happen next, while deterministic software owns durable state transitions.</p>
+<p>That separation makes retries, recovery, auditability and human approval tractable. It also prevents a model from becoming the accidental source of truth for a long-running process.</p>
+<h2>Boundary 4: reasoning and structured output</h2>
+<p>Model reasoning should be constrained by explicit contracts. Use schemas for classifications, comparisons, extracted claims and tool requests. Validate outputs before they cross into deterministic services. Structured output is not merely developer ergonomics; it is an architectural control surface.</p>
+<h2>Boundary 5: action and consequence</h2>
+<p>Reading is different from writing. A system that summarizes experimental evidence has a different risk profile from one that updates records, schedules work or changes a downstream workflow. Consequential actions should be narrow, typed, permission-aware and idempotent where possible.</p>
+<p>Human-in-the-loop design should therefore be placed at consequential boundaries rather than bolted onto the end as a generic “approve” button.</p>
+<h2>Boundary 6: feedback and evaluation</h2>
+<p>A production system needs two feedback loops. The first is engineering: latency, errors, retrieval misses, tool failures and cost. The second is task quality: groundedness, completeness, reviewer disagreement, override behavior, abstention quality and whether users return to manual work.</p>
+<p>That second loop matters because adoption is diagnostic. If scientists repeatedly export results into spreadsheets or manually re-open the same source documents, the system is revealing an architectural gap.</p>
+<h2>Reference architecture</h2>
+<pre><code>User / application
+      ↓
+Identity + policy
+      ↓
+Workflow orchestrator ─────→ durable state
+      ↓
+Permission-aware retrieval ─→ structured scientific data
+      ↓
+Evidence assembly + provenance
+      ↓
+Model gateway / structured reasoning
+      ↓
+Claim checks + evaluation hooks
+      ↓
+Typed tools ───────────────→ deterministic services
+      ↓
+Human review at consequential boundaries
+      ↓
+Telemetry + quality feedback</code></pre>
+<h2>Tradeoffs I would make explicit in an architecture review</h2>
+<ul><li><strong>Freshness vs. indexing cost:</strong> which sources need near-real-time availability and which can tolerate batch ingestion?</li><li><strong>Recall vs. review burden:</strong> aggressive retrieval may increase coverage while making evidence inspection harder.</li><li><strong>Agent flexibility vs. determinism:</strong> open-ended planning increases capability but expands the failure surface.</li><li><strong>Latency vs. verification:</strong> reranking, claim checks and secondary evaluators cost time; decide where that cost is justified.</li><li><strong>Central platform vs. workflow-specific products:</strong> standardize primitives, not every user experience.</li></ul>
+<h2>What I would deliberately not build first</h2>
+<p>I would not start with a general-purpose autonomous agent for “all scientific work.” The risk surface is too broad and the evaluation target is too vague. I would choose one expensive decision, build the smallest vertical slice through the real evidence and permissions stack, and instrument the failure modes before widening autonomy.</p>
+<blockquote>Production AI is not a model surrounded by APIs. It is a decision architecture in which a model is one reasoning component.</blockquote>
+<p>That is the lens I would use for AI architecture in biotech and life sciences: optimize the full workflow, make evidence inspectable, make state explicit, and make failure behavior part of the design.</p>
+</article><div class="article-next"><span>Continue exploring</span><a href="../blog.html">All architecture &amp; field engineering writing ↗</a></div></main><footer class="footer"><div class="container footer-grid"><div>© <span data-year=""></span> Hassan Malik · Connecticut / Boston</div><div class="footer-links"><a href="../blog.html">Writing</a><a href="../lab.html">Lab</a><a href="../experience.html">Experience</a><a href="https://www.linkedin.com/in/malik-msee/" rel="me noopener noreferrer" target="_blank">LinkedIn ↗</a><a href="https://github.com/hassanmalik">GitHub ↗</a></div></div></footer><script src="../assets/main.js"></script></body></html>
