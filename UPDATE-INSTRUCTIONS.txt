@@ -11,7 +11,7 @@ HASSANMALIKBLOG — READABILITY + LINKEDIN + STAFF/PRINCIPAL POSITIONING UPDATE
 This update keeps the visual design, improves long-form readability, points every page to your current LinkedIn profile, and reframes Staff/Principal language as the scope of the engineering problems you write about rather than as a claimed current title.
 
 Live site:
-https://hassanmalik.github.io/hassanmalikblog/
+https://demoisnotdone.com/
 
 LinkedIn:
 https://www.linkedin.com/in/malik-msee/
