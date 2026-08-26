@@ -3,7 +3,7 @@ import re
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "20260826-2"
+VERSION = "20260826-3"
 errors = []
 
 for path in sorted(ROOT.rglob("*.html")):
@@ -38,9 +38,15 @@ homepage = (ROOT / "index.html").read_text(encoding="utf-8")
 for marker in [
     'class="systems-field"',
     'class="systems-path"',
-    'class="field-node field-node-evidence"',
+    'class="field-node field-node-discover"',
+    'class="field-node field-node-ground"',
+    'class="field-node field-node-decide"',
+    'class="field-node field-node-build"',
+    'class="field-node field-node-harden"',
     'class="field-node field-node-adoption"',
-    'aria-label="Production system journey"',
+    'class="leadership-rail"',
+    'aria-label="Principal engineering operating loop',
+    'Discover &rarr; ground &rarr; decide &rarr; build &rarr; harden &rarr; adopt &rarr; learn',
 ]:
     if marker not in homepage:
         errors.append(f"index.html: scroll-driven systems field missing {marker}")
