@@ -3,7 +3,7 @@ import re
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "20260826-1"
+VERSION = "20260826-2"
 errors = []
 
 for path in sorted(ROOT.rglob("*.html")):
@@ -36,23 +36,44 @@ if not re.search(r'<body[^>]*class="[^"]*experience-page', experience):
 homepage = (ROOT / "index.html").read_text(encoding="utf-8")
 
 for marker in [
-    'class="system-observer"',
-    'class="observer-eye observer-eye-left"',
-    'class="observer-eye observer-eye-right"',
-    'aria-label="Interactive system observer"',
+    'class="systems-field"',
+    'class="systems-path"',
+    'class="field-node field-node-evidence"',
+    'class="field-node field-node-adoption"',
+    'aria-label="Production system journey"',
 ]:
     if marker not in homepage:
-        errors.append(f"index.html: interactive observer missing {marker}")
+        errors.append(f"index.html: scroll-driven systems field missing {marker}")
 
 script = (ROOT / "assets" / "main.js").read_text(encoding="utf-8")
-for behavior in ["pointermove", "prefers-reduced-motion", "--look-x", "--look-y"]:
+for behavior in [
+    "pointermove",
+    "prefers-reduced-motion",
+    "IntersectionObserver",
+    "requestAnimationFrame",
+    "--field-x",
+    "--field-y",
+    "--hero-progress",
+    "data-motion-cue",
+    "const revealPassedCues",
+]:
     if behavior not in script:
-        errors.append(f"assets/main.js: observer interaction missing {behavior}")
+        errors.append(f"assets/main.js: homepage motion system missing {behavior}")
 
-if ".architecture-board:has(.system-observer){--look-x:0;--look-y:0" not in css:
-    errors.append("assets/styles.css: observer coordinates must inherit from board scope")
-if ".system-observer{--look-x:0;--look-y:0" in css:
-    errors.append("assets/styles.css: observer must not shadow board pointer coordinates")
+for rule in [
+    ".systems-path{stroke-dasharray:1;stroke-dashoffset:calc(1 - var(--hero-progress))",
+    ".motion-ready [data-motion-cue]",
+    ".motion-ready [data-motion-cue].is-visible",
+    "@media(prefers-reduced-motion:reduce)",
+]:
+    if rule not in css:
+        errors.append(f"assets/styles.css: homepage motion styling missing {rule}")
+
+if ".field-signal{position:absolute;left:0;top:0" not in css:
+    errors.append("assets/styles.css: path signal must share the SVG path origin")
+
+if "system-observer" in homepage or "observer-eye" in homepage:
+    errors.append("index.html: rejected robot observer remains")
 
 if errors:
     print("FAIL")
