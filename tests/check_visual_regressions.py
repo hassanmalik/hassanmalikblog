@@ -3,7 +3,7 @@ import re
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "20260823-3"
+VERSION = "20260826-1"
 errors = []
 
 for path in sorted(ROOT.rglob("*.html")):
@@ -32,6 +32,27 @@ for snippet in required:
 experience = (ROOT / "experience.html").read_text(encoding="utf-8")
 if not re.search(r'<body[^>]*class="[^"]*experience-page', experience):
     errors.append("experience.html: missing experience-page scope")
+
+homepage = (ROOT / "index.html").read_text(encoding="utf-8")
+
+for marker in [
+    'class="system-observer"',
+    'class="observer-eye observer-eye-left"',
+    'class="observer-eye observer-eye-right"',
+    'aria-label="Interactive system observer"',
+]:
+    if marker not in homepage:
+        errors.append(f"index.html: interactive observer missing {marker}")
+
+script = (ROOT / "assets" / "main.js").read_text(encoding="utf-8")
+for behavior in ["pointermove", "prefers-reduced-motion", "--look-x", "--look-y"]:
+    if behavior not in script:
+        errors.append(f"assets/main.js: observer interaction missing {behavior}")
+
+if ".architecture-board:has(.system-observer){--look-x:0;--look-y:0" not in css:
+    errors.append("assets/styles.css: observer coordinates must inherit from board scope")
+if ".system-observer{--look-x:0;--look-y:0" in css:
+    errors.append("assets/styles.css: observer must not shadow board pointer coordinates")
 
 if errors:
     print("FAIL")
