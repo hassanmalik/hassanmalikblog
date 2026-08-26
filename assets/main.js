@@ -25,3 +25,20 @@ if(filterButtons.length&&publicationCards.length){
     if(resultCount)resultCount.textContent=`Showing ${visible} articles`;
   }));
 }
+
+const observerBoard=document.querySelector('.architecture-board:has(.system-observer)');
+const reducedMotion=window.matchMedia('(prefers-reduced-motion: reduce)');
+const finePointer=window.matchMedia('(pointer: fine)');
+if(observerBoard&&!reducedMotion.matches&&finePointer.matches){
+  const setObserverLook=(x,y)=>{
+    observerBoard.style.setProperty('--look-x',String(x));
+    observerBoard.style.setProperty('--look-y',String(y));
+  };
+  observerBoard.addEventListener('pointermove',event=>{
+    const bounds=observerBoard.getBoundingClientRect();
+    const x=Math.max(-1,Math.min(1,((event.clientX-bounds.left)/bounds.width-.5)*2));
+    const y=Math.max(-1,Math.min(1,((event.clientY-bounds.top)/bounds.height-.5)*2));
+    setObserverLook(x,y);
+  });
+  observerBoard.addEventListener('pointerleave',()=>setObserverLook(0,0));
+}
