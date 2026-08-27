@@ -50,14 +50,12 @@ export async function initVisitorCounter({
 
   const recordVisit = async () => {
     if (recorded) return;
+    try { storage.setItem(SESSION_KEY, 'true'); } catch { /* Storage is optional. */ }
     try {
-      const response = await fetchImpl(`${WORKER_ORIGIN}/visit`, {
+      await fetchImpl(`${WORKER_ORIGIN}/visit`, {
         method: 'POST',
         credentials: 'omit',
       });
-      if (response.ok) {
-        try { storage.setItem(SESSION_KEY, 'true'); } catch { /* Storage is optional. */ }
-      }
     } catch {
       // Statistics can still load when the write endpoint is temporarily unavailable.
     }

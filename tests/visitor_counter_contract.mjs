@@ -102,4 +102,24 @@ assert.equal(slowWrite.root.attributes['aria-label'], '1 total visit from 1 coun
 releaseVisit();
 await slowRun;
 
+const failedWriteCalls = [];
+const failedWriteStore = new Map();
+const failedWriteStorage = {
+  getItem: (key) => failedWriteStore.get(key) ?? null,
+  setItem: (key, value) => failedWriteStore.set(key, value),
+};
+const failedWriteFetch = async (url, options = {}) => {
+  const method = options.method ?? 'GET';
+  failedWriteCalls.push(method);
+  if (url.endsWith('/visit')) return { ok: false, status: 503 };
+  return {
+    ok: true,
+    json: async () => ({ visits: 9, countries: 2, topCountries: [] }),
+  };
+};
+await initVisitorCounter({ documentRef, fetchImpl: failedWriteFetch, storage: failedWriteStorage });
+await initVisitorCounter({ documentRef, fetchImpl: failedWriteFetch, storage: failedWriteStorage });
+assert.deepEqual(failedWriteCalls, ['POST', 'GET', 'GET']);
+assert.equal(failedWriteStore.get('hm-visit-recorded-v1'), 'true');
+
 console.log('PASS: visitor counter records once per session and renders live aggregate statistics');
