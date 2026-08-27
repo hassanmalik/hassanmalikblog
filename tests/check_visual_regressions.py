@@ -3,7 +3,7 @@ import re
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "20260826-4"
+VERSION = "20260827-1"
 errors = []
 
 for path in sorted(ROOT.rglob("*.html")):
@@ -24,6 +24,8 @@ required = [
     ".experience-page .page-grid{grid-template-columns:220px minmax(0,1fr)",
     ".experience-page .timeline{grid-column:2",
     ".experience-page .timeline-item h3{font-size:clamp(2rem,3vw,3rem)",
+    ".experience-page .official-role{font:600 11px/1.5 var(--mono)",
+    ".experience-page .timeline-item{scroll-margin-top:96px}",
 ]
 for snippet in required:
     if snippet not in css:
