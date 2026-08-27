@@ -3,7 +3,7 @@ import subprocess
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "20260826-4"
+VERSION = "20260827-1"
 errors = []
 
 pages = []

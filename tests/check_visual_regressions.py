@@ -24,7 +24,7 @@ required = [
     ".experience-page .page-grid{grid-template-columns:220px minmax(0,1fr)",
     ".experience-page .timeline{grid-column:2",
     ".experience-page .timeline-item h3{font-size:clamp(2rem,3vw,3rem)",
-    ".experience-page .official-role{font:600 9px/1.5 var(--mono)",
+    ".experience-page .official-role{font:600 11px/1.5 var(--mono)",
     ".experience-page .timeline-item{scroll-margin-top:96px}",
 ]
 for snippet in required:
