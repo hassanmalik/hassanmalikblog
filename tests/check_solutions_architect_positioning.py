@@ -78,6 +78,26 @@ for capability in ["technical discovery", "solution design", "delivery and adopt
     if capability not in experience_text:
         errors.append(f"Experience page is missing capability: {capability}")
 
+experience_roles = experience.select(".timeline-item .timeline-role")
+if len(experience_roles) != 5:
+    errors.append("Experience page must present five leadership-oriented role titles")
+elif any("lead" not in role.get_text(" ", strip=True).lower() for role in experience_roles):
+    errors.append("Each experience role must foreground a leadership scope")
+
+official_roles = [
+    role.get_text(" ", strip=True).removeprefix("Official role:").strip()
+    for role in experience.select(".timeline-item .official-role")
+]
+expected_official_roles = [
+    "Senior Data Engineer / Software Engineer",
+    "Technical Program Manager",
+    "Technical Program Manager",
+    "Release & Testing Manager",
+    "Data Engineer — Logistics & Reverse Logistics",
+]
+if official_roles != expected_official_roles:
+    errors.append(f"Experience page must preserve verified official titles: {official_roles}")
+
 schema = home.select_one('script[type="application/ld+json"]')
 if not schema:
     errors.append("homepage Person schema is missing")
