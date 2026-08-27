@@ -61,4 +61,45 @@ assert.equal(unavailable.countries.textContent, '— countries');
 assert.equal(unavailable.root.attributes['aria-label'], 'Visitor statistics unavailable');
 assert(unavailable.classes.has('is-unavailable'));
 
+const malformed = counterFixture();
+await initVisitorCounter({
+  documentRef: { querySelectorAll: () => [malformed.root] },
+  fetchImpl: async () => ({
+    ok: true,
+    json: async () => ({ visits: '0', countries: 0, topCountries: [] }),
+  }),
+  storage: { getItem: () => 'true', setItem: () => {} },
+});
+assert.equal(malformed.root.attributes['aria-label'], 'Visitor statistics unavailable');
+assert(malformed.classes.has('is-unavailable'));
+
+const slowWrite = counterFixture();
+let releaseVisit;
+let confirmStatsRequested;
+const statsRequested = new Promise((resolve) => { confirmStatsRequested = resolve; });
+const slowRun = initVisitorCounter({
+  documentRef: { querySelectorAll: () => [slowWrite.root] },
+  fetchImpl: async (url) => {
+    if (url.endsWith('/visit')) {
+      return new Promise((resolve) => { releaseVisit = () => resolve({ ok: true }); });
+    }
+    confirmStatsRequested();
+    return {
+      ok: true,
+      json: async () => ({ visits: 1, countries: 1, topCountries: [] }),
+    };
+  },
+  storage: { getItem: () => null, setItem: () => {} },
+});
+await Promise.race([
+  statsRequested,
+  new Promise((_, reject) => setTimeout(() => reject(new Error('stats read blocked by visit write')), 100)),
+]);
+await new Promise((resolve) => setTimeout(resolve, 0));
+assert.equal(slowWrite.visits.textContent, '1 visit');
+assert.equal(slowWrite.countries.textContent, '1 country');
+assert.equal(slowWrite.root.attributes['aria-label'], '1 total visit from 1 country');
+releaseVisit();
+await slowRun;
+
 console.log('PASS: visitor counter records once per session and renders live aggregate statistics');
