@@ -3,7 +3,7 @@ import re
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
-VERSION = "20260826-3"
+VERSION = "20260826-4"
 errors = []
 
 for path in sorted(ROOT.rglob("*.html")):
